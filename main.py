@@ -8,21 +8,32 @@ import threading
 
 
 class Sensor:
-    """ Class for an individual sensor.
-        address is a string of the usb-serial bus on the pi.
-        node is the manually adjusted "port" on the physical sensor.
+    """ 
+    Class for an individual sensor.
+    
+    
+    :param address: A string of the usb-serial bus on the pi.
+    :type address: string
+    
+    
+    :param node: The manually adjusted "port" on the physical sensor.
+    :type node: int
     """
 
-    def __init__(self, name:str, address:str, node:int) -> None:
+    def __init__(self, name, address, node) -> None:
         self.instrument = propar.instrument(address, node)
         self.name = name
         
         self.instrument.wink(3) # KLEINE TEST 
 
     def readSingle(self, parameter) -> any | None:
-        """ Reads a single parameter from the sensor, needs a single parameter index
-            Lookup in the Bronkhorst Propar docs which index matches the desired parameter.
         """
+        Reads a single parameter from the sensor, lookup in the Bronkhorst Propar docs which index matches the desired parameter.
+        
+        :param parameter: The parameter to read.
+        :type parameter: int
+        """
+        
         return self.instrument.readParameter(parameter)
 
     def readMultiple(self, parameters) -> list | None:
