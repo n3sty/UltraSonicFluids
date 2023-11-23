@@ -26,7 +26,7 @@ class Sensor:
         
         self.instrument.wink(3) # KLEINE TEST 
 
-    def readSingle(self, parameter) -> any | None:
+    def readSingle(self, parameter):
         """
         Reads a single parameter from the sensor, lookup in the Bronkhorst Propar docs which index matches the desired parameter.
         
@@ -36,7 +36,7 @@ class Sensor:
         
         return self.instrument.readParameter(parameter)
 
-    def readMultiple(self, parameters) -> list | None:
+    def readMultiple(self, parameters):
         """ Reads multiple parameters from the sensor, needs a list of parameter indices
             Lookup in the Bronkhorst Propar docs which index matches the desired parameter.
         """
