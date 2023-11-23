@@ -60,9 +60,28 @@ def main():
     for the script. The main first initializes all variables and structures, and
     then runs the while loop for all updates and data gathering functions.
     """
-    
-    global bl100, diffp, coriflow, iteration, df, path
+    global iteration, gatherTime, dataFrequency
    
+    Initialize()
+    
+    # Loop containing al the update functions for reading data.
+    while iteration < gatherTime * dataFrequency:
+        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
+        threadUpdate = threading.Thread(target=UpdateDataframe, args=())
+        threadUpdate.start()
+
+    WriteData()
+    
+    return 0        
+
+
+def Initialize():
+    """
+    For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
+    Returns nothing.    
+    """
+    global bl100, diffp, coriflow, dataFrequency, iteration, gatherTime, path, df
+    
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
     bl100 = Sensor("bl100", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
@@ -78,18 +97,6 @@ def main():
     gatherTime = 10                         # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/Data"  # Output location on the raspberry pi
     
-    # Loop containing al the update functions for reading data.
-    while iteration < gatherTime * dataFrequency:
-        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
-        threadUpdate = threading.Thread(target=UpdateDataframe, args=())
-        threadUpdate.start()
-
-    WriteData()
-    
-    return 0        
-
-
-def Initialize():
     return 0
 
 
@@ -120,15 +127,12 @@ def Readout():
 def UpdateDataframe():
     """
     Function designed to be simple and quick, to run every data-gather-period.
-    TODO: Check if the current method of changing the dataframe works efficiently.
     Returns nothing.    
     """
-    global iteration    
+    global iteration, df
     
     data = list(Readout())
-    
     df.loc[iteration] = data
-    
     print(data)
     
     iteration += 1
@@ -140,9 +144,9 @@ def WriteData():
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Writes the data gathered in the last iteration to a .csv file.
-    TODO: Don't write every period, only write when the gathering is done.
     Returns nothing.
     """
+    global df
     
     df.to_csv(path+"output.csv", index=False)
     
