@@ -1,4 +1,5 @@
 # Importing required packages
+import pressure_temperature_arduino as pta  # Arduino controller script
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import numpy as np 
 import datetime
@@ -61,16 +62,21 @@ def main():
     """
     global iteration, gatherTime, dataFrequency
    
-    Initialize()
+    # Initialize()
+    ArduinoInitialize()
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     while iteration < gatherTime * dataFrequency:
-        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
-        threadUpdate = threading.Thread(target=UpdateDataframe, args=())
-        threadUpdate.start()
+    #     time.sleep(1 / dataFrequency)       # Runs every 1/f period        
+    #     threadUpdate = threading.Thread(target=UpdateDataframe, args=())
+    #     threadUpdate.start()
 
-    WriteData()
+    # WriteData()
+        AruinoReadout()
+        print(arduino)
+    
+    ptemp.close()
     
     return 0        
 
@@ -80,13 +86,13 @@ def Initialize():
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """
-    global bl100, diffp, coriflow, dataFrequency, iteration, gatherTime, path, df
+    global bl100, diffp, coriflow, ptemp, dataFrequency, iteration, gatherTime, path, df
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
     bl100 = Sensor("bl100", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
     diffp = Sensor("diffp", "/dev/ttyUSB2", 4)       # Pressure drop Sensor location and node
-    coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)    # Coriolis flow Sensor location and node
+    coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5) # Coriolis flow Sensor location and node
     
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     df = pd.DataFrame(columns=["Time", "T_BL100", "MF_BL100", "RHO_BL100", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
@@ -96,6 +102,21 @@ def Initialize():
     iteration = 0                           # Loop iteration starts at index 0
     gatherTime = 10                         # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/Data"  # Output location on the raspberry pi
+    
+    return 0
+
+
+def ArduinoInitialize():
+    global arduino, ptemp, dataFrequency, iteration, gatherTime
+    
+    # Certain constants that influence the data gathering and the length/size of the measurement.
+    dataFrequency = 4                       # Number of data samples per second
+    iteration = 0                           # Loop iteration starts at index 0
+    gatherTime = 10                         # Time (sec) of data gathering
+    
+    # TODO: rewrite arduino class for efficiency
+    ptemp = pta.PressTemp
+    ptemp.setup(self=ptemp, port="COM7")
     
     return 0
 
@@ -119,8 +140,19 @@ def Readout():
     
     # Concatenating results into a single data variable
     data = (t, T_BL100, MF_BL100, RHO_BL100, T_CORI, MF_CORI, RHO_CORI, DP)
-    
+        
     return data
+
+
+def AruinoReadout():
+    global arduino, ptemp
+    
+    
+    ptemp.getCvalues(ptemp)
+    arduino = ptemp.getRawData(ptemp)
+
+    
+    return 0
 
 
 def UpdateDataframe():

@@ -72,9 +72,9 @@ class PressTemp:
         time.sleep(0.1)
         V = str(self.Ardi.readline())[2:-7]
         V = [float(v) for v in V.split(';')]
-        VV = list(self.calculateData(self.sens2,V[0],V[1]))
-        VV.extend(list(self.calculateData(self.sens4,V[2],V[3])))
-        VV.extend(list(self.calculateData(self.sens6,V[4],V[5])))
+        VV = list(self.calculateData(self.sens2, V[0], V[1]))
+        VV.extend(list(self.calculateData(self.sens4, V[2], V[3])))
+        VV.extend(list(self.calculateData(self.sens6, V[4], V[5])))
         return [x*float(v) for v,x in zip(VV,[1.045, 1, 1.01, 1, 1, 1])]
 
     def calculateData(self, C, D1, D2):
