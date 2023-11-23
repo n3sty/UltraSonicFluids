@@ -51,7 +51,7 @@ class Sensor:
 
 
 def main():
-    global bl100, diffp, coriflow
+    global bl100, diffp, coriflow, iteration, df, path
    
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
@@ -60,9 +60,24 @@ def main():
     coriflow = Sensor("/dev/ttyUSB2", 5)    
     
     df = pd.DataFrame(columns=["Time", "T_BL100", "MF_BL100", "RHO_BL100", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
+    
+    dataFrequency = 4                       # Number of data samples per second
+    iteration = 0                           # Loop iteration starts at index 0
+    gatherTime = 10                         # Time (sec) of data gathering
+    path = "/home/flow-setup/Desktop/Data"  # Output location on the raspberry pi
+    
+    # Loop containing al the update functions for reading data.
+    while iteration < gatherTime * dataFrequency:
+        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
+        threadUpdate = threading.Thread(target=UpdateDataframe, args=())
+        threadWrite = threading.Thread(target=WriteData, args=())
+        threadUpdate.start()
+        threadWrite.start()
+        
+
 
 # The readout function reads out the sensors and exports to a .csv file.
-def readout():
+def Readout():
     """ Reads the data from the preformatted sensors
         # TODO: incorporate compatibility with all types of sensors
     """
@@ -78,6 +93,23 @@ def readout():
     data = (t, T_BL100, MF_BL100, RHO_BL100, T_CORI, MF_CORI, RHO_CORI, DP)
     
     return data
+
+
+def UpdateDataframe():
+    
+    df.loc[iteration] = list(Readout())
+    
+    iteration += 1
+    
+    return 0
+
+
+def WriteData():
+    
+    df.to_csv(path+"output.csv", index=False)
+    
+    return 0
+    
 
 if __name__ == main():
     main()
