@@ -64,6 +64,7 @@ def main():
     Initialize()
     
     # Loop containing al the update functions for reading data.
+    # TODO: Remove sleep, to keep the time in between data gathers usable.
     while iteration < gatherTime * dataFrequency:
         time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         threadUpdate = threading.Thread(target=UpdateDataframe, args=())
@@ -99,7 +100,6 @@ def Initialize():
     return 0
 
 
-# The readout function reads out the sensors on specified parameters and exports to a .csv file.
 def Readout():
     """ 
     Reads the data from the preformatted sensors
