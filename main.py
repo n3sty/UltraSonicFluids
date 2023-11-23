@@ -89,6 +89,10 @@ def main():
     return 0        
 
 
+def Initialize():
+    return 0
+
+
 # The readout function reads out the sensors on specified parameters and exports to a .csv file.
 def Readout():
     """ 
