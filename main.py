@@ -61,9 +61,9 @@ def main():
    
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
-    bl100 = Sensor("/dev/ttyUSB2", 7)       # bl100 Sensor location and node
-    diffp = Sensor("/dev/ttyUSB2", 4)       # Pressure drop Sensor location and node
-    coriflow = Sensor("/dev/ttyUSB2", 5)    # Coriolis flow Sensor location and node
+    bl100 = Sensor("bl100", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
+    diffp = Sensor("diffp", "/dev/ttyUSB2", 4)       # Pressure drop Sensor location and node
+    coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)    # Coriolis flow Sensor location and node
     
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     df = pd.DataFrame(columns=["Time", "T_BL100", "MF_BL100", "RHO_BL100", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
