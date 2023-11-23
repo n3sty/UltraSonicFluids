@@ -34,12 +34,16 @@ class Sensor:
         :type parameter: int
         """
         
+        self.instrument.wink(1)
+        
         return self.instrument.readParameter(parameter)
 
     def readMultiple(self, parameters):
         """ Reads multiple parameters from the sensor, needs a list of parameter indices
             Lookup in the Bronkhorst Propar docs which index matches the desired parameter.
         """
+        
+        self.instrument.wink(1)
         
         out = []
     
@@ -78,10 +82,11 @@ def main():
     while iteration < gatherTime * dataFrequency:
         time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         threadUpdate = threading.Thread(target=UpdateDataframe, args=())
-        threadWrite = threading.Thread(target=WriteData, args=())
         threadUpdate.start()
-        threadWrite.start()
-        
+
+    WriteData()
+    
+    return 0        
 
 
 # The readout function reads out the sensors on specified parameters and exports to a .csv file.
@@ -116,7 +121,11 @@ def UpdateDataframe():
     """
     global iteration    
     
-    df.loc[iteration] = list(Readout())
+    data = list(Readout())
+    
+    df.loc[iteration] = data
+    
+    print(data)
     
     iteration += 1
     
