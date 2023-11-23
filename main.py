@@ -91,6 +91,8 @@ def Readout():
     Returns a tuple of defined data variables
     # TODO: incorporate compatibility with all types of sensors
     """
+    global bl100, coriflow, diffp
+
 
     # Getting the time of the measurement
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
@@ -112,6 +114,8 @@ def UpdateDataframe():
     TODO: Check if the current method of changing the dataframe works efficiently.
     Returns nothing.    
     """
+    global iteration    
+    
     df.loc[iteration] = list(Readout())
     
     iteration += 1
