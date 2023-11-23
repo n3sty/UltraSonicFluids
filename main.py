@@ -6,6 +6,7 @@ import time
 import propar                               # The Bronkhorst sensor reading package
 import threading
 
+# test voor luuk moet nog weg
 
 class Sensor:
     """ 
