@@ -7,6 +7,7 @@ import threading
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+
 def main():
     """
     Main function encapsulates all other functions that provide the functionality
@@ -15,23 +16,25 @@ def main():
     """
     global iteration, gatherTime, dataFrequency
    
-    Initialize()
+    initialize()
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
-    while iteration < gatherTime * dataFrequency:
+    iterations = gatherTime * dataFrequency
+
+    while iteration < iterations:
         time.sleep(1 / dataFrequency)       # Runs every 1/f period        
-        threadUpdate = threading.Thread(target=UpdateDataframe, args=())
+        threadUpdate = threading.Thread(target=updateDataframe, args=())
         threadUpdate.start()
         
         bl100.wink(3)
 
-    WriteData()
+    writeData()
     
     return 0        
 
 
-def Initialize():
+def initialize():
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
@@ -56,7 +59,7 @@ def Initialize():
     return 0
 
 
-def Readout():
+def readout():
     """ 
     Reads the data from the preformatted sensors
     Returns a tuple of defined data variables
@@ -79,14 +82,14 @@ def Readout():
     return data
 
 
-def UpdateDataframe():
+def updateDataframe():
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
     """
     global iteration, df
     
-    data = list(Readout())
+    data = list(readout())
     df.loc[iteration] = data # 
     print(data)
     
@@ -95,7 +98,7 @@ def UpdateDataframe():
     return 0
 
 
-def WriteData():
+def writeData():
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Writes the data gathered in the last iteration to a .csv file.
