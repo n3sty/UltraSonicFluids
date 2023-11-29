@@ -10,11 +10,18 @@ def main():
     
     temporary = Sensor(name, loc, 7)
     
-    print(type(temporary.instrument.db))
+    db = temporary.isntrument.db
+    
+    print(f'Standard propar database: \n {db}')
+    
+    dict_db = dict(db)
+    
+    print(f'Dictionary database: \n {dict_db}')
+    
     
     with open("parameters_db.csv", 'w', newline='') as file:
         writer = csv.writer(file)
-        for row in temporary.instrument.db:
+        for row in dict_db:
             writer.writerow(row)
     
     return 0
