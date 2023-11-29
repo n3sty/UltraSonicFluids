@@ -32,18 +32,14 @@ class Sensor:
         :param parameter: The parameter to read.
         :type parameter: int
         """
-        
-        self.instrument.wink(1)
-        
+                
         return self.instrument.readParameter(parameter)
 
     def readMultiple(self, parameters):
         """ Reads multiple parameters from the sensor, needs a list of parameter indices
             Lookup in the Bronkhorst Propar docs which index matches the desired parameter.
         """
-        
-        self.instrument.wink(1)
-        
+                
         out = []
     
         for p in parameters:
@@ -51,6 +47,15 @@ class Sensor:
             out.append(val)
             
         return out
+
+    def wink(self, time):
+        """
+        Callable wink function
+        """
+
+        self.instrument.wink(time)
+
+        return 0
 
 
 def main():
@@ -69,6 +74,8 @@ def main():
         time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         threadUpdate = threading.Thread(target=UpdateDataframe, args=())
         threadUpdate.start()
+        
+        bl100.wink(3)
 
     WriteData()
     
