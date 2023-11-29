@@ -10,7 +10,7 @@ def main():
     
     temporary = Sensor(name, loc, 7)
     
-    db = temporary.isntrument.db
+    db = temporary.instrument.db
     
     print(f'Standard propar database: \n {db}')
     
