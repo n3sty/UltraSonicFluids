@@ -102,7 +102,7 @@ def Initialize():
     dataFrequency = 4                       # Number of data samples per second
     iteration = 0                           # Loop iteration starts at index 0
     gatherTime = 10                         # Time (sec) of data gathering
-    path = "/home/flow-setup/Desktop/Data"  # Output location on the raspberry pi
+    path = "/home/flow-setup/Desktop/"  # Output location on the raspberry pi
     
     return 0
 

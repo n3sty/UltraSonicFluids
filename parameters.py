@@ -1,4 +1,3 @@
-import propar
 from main import Sensor
 import pandas as pd
 

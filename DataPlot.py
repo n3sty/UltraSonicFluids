@@ -1,28 +1,34 @@
-# Luuk 23-nov
-# let op dit is nog een test voor een betere animatie manier nog niet af
-# https://www.youtube.com/watch?app=desktop&v=Ercd-Ip5PfQ
-
-import random
-from itertools import count
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-
-plt.style.use('fivethirtyeight')
-
-x_var = []
-y_var = []
-
-index = count()
-
-def animate(i):
-    x_var.append(next(index))
-    y_var.append(random.randint(0, 5))
-
-    plt.plot(x_var, y_var)
 
 
-animate = FuncAnimation(plt.gcf(), animate, interval=1000)
+def importPlotData():
+    
+    print("\n\nRunning...\n\n")
+    
+    path = "./Dataoutput.csv"
+    
+    df = pd.read_csv(path)
+    
+    return df
 
-plt.tight_layout()
-plt.show()
+
+def plotData(df):
+    
+    plt.style.use('fivethirtyeight')
+    
+    x_var = df['']
+    
+    return 0
+
+
+def main():
+    
+    plotData(importPlotData())
+        
+    return 0
+
+
+if __name__ == main():
+    main()
