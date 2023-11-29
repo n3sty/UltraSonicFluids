@@ -2,7 +2,7 @@
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime
 import time
-import Sensor
+from Sensor import Sensor
 import threading
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)

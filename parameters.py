@@ -1,4 +1,4 @@
-import Sensor
+from Sensor import Sensor
 import pandas as pd
 
 def main():
