@@ -15,7 +15,10 @@ def main():
     print(f'Standard propar database: \n {db}')
     
     with open("parameters_db.csv", 'w', newline='') as file:
-        writer = csv.writer(file)
+        fieldnames = ['parm_nr', 'parm_name']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        
+        writer.writeheader()
         for row in db:
             writer.writerow(row)
     
