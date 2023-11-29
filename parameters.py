@@ -9,7 +9,7 @@ def main():
     
     
     temporary = Sensor(name, loc, 7)
-    db = pd.DataFrame(temporary.db())
+    db = pd.DataFrame(temporary.instrument.db)
     
     db.to_csv(path, index=False)
     
