@@ -1,4 +1,6 @@
-# Importing required packages
+"""
+
+"""
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime
 import time
@@ -8,14 +10,23 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
+global iteration, gatherTime, dataFrequency, bl100, diffp, coriflow, path, df
+
+
+# Certain constants that influence the data gathering and the length/size of the measurement.
+dataFrequency = 4                       # Number of data samples per second
+iteration = 0                           # Loop iteration starts at index 0
+gatherTime = 10                         # Time (sec) of data gathering
+path = "/home/flow-setup/Desktop/"      # Output location on the raspberry pi
+
+
 def main():
     """
     Main function encapsulates all other functions that provide the functionality
     for the script. The main first initializes all variables and structures, and
     then runs the while loop for all updates and data gathering functions.
     """
-    global iteration, gatherTime, dataFrequency
-   
+       
     initialize()
     
     # Loop containing al the update functions for reading data.
@@ -38,9 +49,7 @@ def initialize():
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
-    """
-    global bl100, diffp, coriflow, dataFrequency, iteration, gatherTime, path, df
-    
+    """    
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
     bl100 = Sensor("bl100", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
@@ -49,12 +58,6 @@ def initialize():
     
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     df = pd.DataFrame(columns=["Time", "T_BL100", "MF_BL100", "RHO_BL100", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
-    
-    # Certain constants that influence the data gathering and the length/size of the measurement.
-    dataFrequency = 4                       # Number of data samples per second
-    iteration = 0                           # Loop iteration starts at index 0
-    gatherTime = 10                         # Time (sec) of data gathering
-    path = "/home/flow-setup/Desktop/"  # Output location on the raspberry pi
     
     return 0
 
@@ -65,9 +68,6 @@ def readout():
     Returns a tuple of defined data variables
     # TODO: incorporate compatibility with all types of sensors
     """
-    global bl100, coriflow, diffp
-
-
     # Getting the time of the measurement
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
     
@@ -86,9 +86,7 @@ def updateDataframe():
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
-    """
-    global iteration, df
-    
+    """    
     data = list(readout())
     df.loc[iteration] = data # 
     print(data)
@@ -103,13 +101,11 @@ def writeData():
     Function designed to be simple and quick, to run every data-gather-period.
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
-    """
-    global df
-    
+    """    
     df.to_csv(path+"output.csv", index=False)
     
     return 0
     
 
-if __name__ == main():
+if __name__ == "__main__":
     main()

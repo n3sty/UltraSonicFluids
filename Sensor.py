@@ -17,7 +17,7 @@ class Sensor:
         self.instrument = propar.instrument(address, node)
         self.name = name
         
-        self.instrument.wink(3) # KLEINE TEST 
+        self.instrument.wink(3)
 
     def readSingle(self, parameter):
         """

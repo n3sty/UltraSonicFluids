@@ -1,30 +1,34 @@
+# Importing used libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import numpy as np
+from main import dataFrequency, gatherTime
+
+# Declaring global variables
+global df
+
+# Initializing style elements
+mpl.style.use('bmh')
 
 
-print(f'\nRunning: {__name__} \nIn: {__file__}\n')
+def importPlotData(path: str) -> pd.DataFrame:
+    """
+    Imports all data from the experiment (provided for by main.py)
+    """
+    return pd.read_csv(path)
 
 
-def importPlotData():
-    
-    path = "./Dataoutput.csv"
-    
-    df = pd.read_csv(path)
+def plot(df: pd.DataFrame, param: str, window_width: int = 20) -> bool:
+    """
+    Plots a certain parameter against time, needs the dataframe as well as the column title.
+    """
 
-    return df
+    gdf = df.tail(window_width)
 
-
-def plotData(df, x_title, y_title):
-
-    mpl.style.use('bmh')
-
-    gdf = df.tail()
-
-    tempplot = gdf.plot(x=x_title, y=y_title)
-    tempplot.set_ylabel(y_title)
+    tempplot = gdf.plot(x='Time', y=param)
+    tempplot.set_ylabel(param)
     tempplot.set_xlabel('Time')
+    tempplot.legend(loc="upper left")
 
     plt.xticks(rotation=90)
 
@@ -32,18 +36,22 @@ def plotData(df, x_title, y_title):
 
 
 def main():
+    """ 
+    Main function that contains all code to be run when the script is ran as a script, not imported as a module.
+    """
+    path = "./Dataoutput.csv"
+    df = importPlotData(path)
+    iterations = dataFrequency * gatherTime
 
-    df = importPlotData()
-
-    plotData(df, 'Time', 'MF_CORI')
-    # plotData(df, 'Time', 'RHO_CORI')
-    # plotData(df, 'Time', 'T_CORI')
-    # plotData(df, 'Time', 'DP')
+    plot(df, 'MF_CORI', iterations)
+    plot(df, 'RHO_CORI', iterations)
+    plot(df, 'T_CORI', iterations)
+    plot(df, 'DP', iterations)
         
     plt.show()
 
     return 0
 
 
-if __name__ == main():
+if __name__ == "__main__":
     main()
