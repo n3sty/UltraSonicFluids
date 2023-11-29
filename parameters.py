@@ -11,8 +11,8 @@ def main():
     temporary = Sensor(name, loc, 7)
     
     with open("parameters_db.csv", 'w', newline='') as file:
-        writer = csv.writer
-        writer.writerows(temporary.instrument.db)
+        writer = csv.csvwriter
+        writer.writerow(temporary.instrument.db)
     
     return 0
 
