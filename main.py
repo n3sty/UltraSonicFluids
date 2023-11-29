@@ -6,6 +6,9 @@ import time
 import propar                               # The Bronkhorst sensor reading package
 import threading
 
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 class Sensor:
     """ 
     Class for an individual sensor.
@@ -138,7 +141,7 @@ def UpdateDataframe():
     global iteration, df
     
     data = list(Readout())
-    df.loc[iteration] = data
+    df.loc[iteration] = data # 
     print(data)
     
     iteration += 1
