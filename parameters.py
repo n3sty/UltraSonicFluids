@@ -10,9 +10,12 @@ def main():
     
     temporary = Sensor(name, loc, 7)
     
+    print(type(temporary.instrument.db))
+    
     with open("parameters_db.csv", 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerows(temporary.instrument.db)
+        for row in temporary.instrument.db:
+            writer.writerow(row)
     
     return 0
 
