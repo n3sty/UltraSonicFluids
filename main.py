@@ -33,9 +33,10 @@ def main():
     iterations = gatherTime * dataFrequency
 
     while iteration < iterations:
-        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         threadUpdate = threading.Thread(target=updateDataframe, args=())
         threadUpdate.start()
+        
+        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         
     writeData(path=path)
     
