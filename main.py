@@ -38,8 +38,6 @@ def main():
         threadUpdate = threading.Thread(target=updateDataframe, args=())
         threadUpdate.start()
         
-        bl100.wink(3)
-
     writeData()
     
     return 0        
