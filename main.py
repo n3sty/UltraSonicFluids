@@ -85,6 +85,8 @@ def updateDataframe():
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
     """    
+    global iteration
+    
     data = list(readout())
     df.loc[iteration] = data 
     print(data)
