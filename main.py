@@ -46,16 +46,17 @@ def initialize():
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global bl100, diffp, coriflow, df
+    global liquiflow, diffp, coriflow, df
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
-    bl100 = Sensor("bl100", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
+    liquiflow = Sensor("liquiflow", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
     diffp = Sensor("diffp", "/dev/ttyUSB2", 4)       # Pressure drop Sensor location and node
     coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)    # Coriolis flow Sensor location and node
     
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
-    df = pd.DataFrame(columns=["Time", "BL100_MF_1", "BL100_MF_2", "BL100_MF_3", "BL100_MF_4", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
+    # TODO: Make dataframe and parameter collection automatically sizeable.
+    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP"])
     
     return 0
 
@@ -70,12 +71,12 @@ def readout():
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
     
     # Read out the desired parameters of each sensor
-    [BL100_MF_1, BL100_MF_2, BL100_MF_3, BL100_MF_4] = bl100.readMultiple([253, 151, 152, 198])
+    [MF_LF] = liquiflow.readSingle([205])
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
-    DP = diffp.readSingle(205)
+    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple(143, 178, 179)
     
     # Concatenating results into a single data variable
-    data = (t, BL100_MF_1, BL100_MF_2, BL100_MF_3, BL100_MF_4, T_CORI, MF_CORI, RHO_CORI, DP)
+    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP)
     
     return data
 
