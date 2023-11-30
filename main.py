@@ -9,10 +9,6 @@ import threading
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-
-global iteration, gatherTime, dataFrequency, path
-
-
 # Certain constants that influence the data gathering and the length/size of the measurement.
 dataFrequency = 4                       # Number of data samples per second
 iteration = 0                           # Loop iteration starts at index 0
@@ -26,6 +22,7 @@ def main():
     for the script. The main first initializes all variables and structures, and
     then runs the while loop for all updates and data gathering functions.
     """
+    global iteration, gatherTime, dataFrequency
        
     initialize()
     
@@ -38,7 +35,7 @@ def main():
         threadUpdate = threading.Thread(target=updateDataframe, args=())
         threadUpdate.start()
         
-    writeData()
+    writeData(path=path)
     
     return 0        
 
@@ -88,7 +85,7 @@ def updateDataframe():
     Returns nothing.    
     """    
     data = list(readout())
-    df.loc[iteration] = data # 
+    df.loc[iteration] = data 
     print(data)
     
     iteration += 1
@@ -96,12 +93,12 @@ def updateDataframe():
     return 0
 
 
-def writeData():
+def writeData(path: str = __path__+"_output.csv"):
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
-    """    
+    """        
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]    
 
     df.to_csv(path+"exp_" + t + ".csv", index=False)
