@@ -93,7 +93,7 @@ def updateDataframe():
     return 0
 
 
-def writeData(path: str = __path__+"_output.csv"):
+def writeData(path):
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Writes the data gathered in the last iteration to a .csv file.
