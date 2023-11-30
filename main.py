@@ -21,7 +21,7 @@ def main():
     global iteration, gatherTime, dataFrequency, path
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
-    dataFrequency = 4                       # Number of data samples per second
+    dataFrequency = 10                       # Number of data samples per second
     iteration = 0                           # Loop iteration starts at index 0
     gatherTime = 60                         # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
