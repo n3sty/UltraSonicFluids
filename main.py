@@ -74,7 +74,7 @@ def readout():
     # Read out the desired parameters of each sensor
     MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
-    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple(143, 178, 179)
+    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
     
     # Concatenating results into a single data variable
     data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP)
