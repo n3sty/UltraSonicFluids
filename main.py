@@ -55,7 +55,7 @@ def initialize():
     coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)    # Coriolis flow Sensor location and node
     
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
-    df = pd.DataFrame(columns=["Time", "T_BL100", "MF_BL100", "RHO_BL100", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
+    df = pd.DataFrame(columns=["Time", "BL100_MF_1", "BL100_MF_2", "BL100_MF_3", "BL100_MF_4", "T_CORI", "MF_CORI", "RHO_CORI", "DP"])
     
     return 0
 
@@ -70,12 +70,12 @@ def readout():
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
     
     # Read out the desired parameters of each sensor
-    [T_BL100, MF_BL100, RHO_BL100] = bl100.readMultiple([142, 205, 270])
+    [BL100_MF_1, BL100_MF_2, BL100_MF_3, BL100_MF_4] = bl100.readMultiple([253, 151, 152, 198])
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
     DP = diffp.readSingle(205)
     
     # Concatenating results into a single data variable
-    data = (t, T_BL100, MF_BL100, RHO_BL100, T_CORI, MF_CORI, RHO_CORI, DP)
+    data = (t, BL100_MF_1, BL100_MF_2, BL100_MF_3, BL100_MF_4, T_CORI, MF_CORI, RHO_CORI, DP)
     
     return data
 
