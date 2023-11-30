@@ -41,7 +41,8 @@ def main():
         except KeyboardInterrupt:
             writeData(path=path)
             break
-            
+    
+    writeData(path=path)
     
     return 0        
 
