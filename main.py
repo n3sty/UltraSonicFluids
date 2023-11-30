@@ -111,7 +111,7 @@ def writeData(path):
     """        
     t = datetime.datetime.now().strftime("%H:%M")[:-5]    
 
-    df.to_csv(path + t + ".csv", index=False)
+    df.to_csv(path + "/EXP_" + t + ".csv", index=False)
     
     return 0
     
