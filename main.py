@@ -10,7 +10,7 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-global iteration, gatherTime, dataFrequency, bl100, diffp, coriflow, path, df
+global iteration, gatherTime, dataFrequency, path
 
 
 # Certain constants that influence the data gathering and the length/size of the measurement.
@@ -48,6 +48,8 @@ def initialize():
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
+    global bl100, diffp, coriflow, df
+    
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
     bl100 = Sensor("bl100", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
