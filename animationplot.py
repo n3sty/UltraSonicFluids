@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 
 plt.style.use('fivethirtyeight')
 #test if git works..
-#test on windows
+#test on windowsss
 
 x_var = []
 y_var = []
