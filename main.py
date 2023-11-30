@@ -9,11 +9,6 @@ import threading
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-# Certain constants that influence the data gathering and the length/size of the measurement.
-dataFrequency = 4                       # Number of data samples per second
-iteration = 0                           # Loop iteration starts at index 0
-gatherTime = 10                         # Time (sec) of data gathering
-path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
 
 def main():
@@ -22,7 +17,13 @@ def main():
     for the script. The main first initializes all variables and structures, and
     then runs the while loop for all updates and data gathering functions.
     """
-    global iteration, gatherTime, dataFrequency
+    global iteration, gatherTime, dataFrequency, path
+
+    # Certain constants that influence the data gathering and the length/size of the measurement.
+    dataFrequency = 4                       # Number of data samples per second
+    iteration = 0                           # Loop iteration starts at index 0
+    gatherTime = 10                         # Time (sec) of data gathering
+    path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
        
     initialize()
     
