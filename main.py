@@ -17,7 +17,7 @@ global iteration, gatherTime, dataFrequency, bl100, diffp, coriflow, path, df
 dataFrequency = 4                       # Number of data samples per second
 iteration = 0                           # Loop iteration starts at index 0
 gatherTime = 10                         # Time (sec) of data gathering
-path = "/home/flow-setup/Desktop/"      # Output location on the raspberry pi
+path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
 
 def main():
@@ -102,7 +102,9 @@ def writeData():
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
     """    
-    df.to_csv(path+"output.csv", index=False)
+    t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]    
+
+    df.to_csv(path+"exp_" + t + ".csv", index=False)
     
     return 0
     

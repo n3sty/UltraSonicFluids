@@ -39,7 +39,7 @@ def main():
     """ 
     Main function that contains all code to be run when the script is ran as a script, not imported as a module.
     """
-    path = "./Dataoutput.csv"
+    path = "./output.csv"
     df = importPlotData(path)
     iterations = dataFrequency * gatherTime
 
