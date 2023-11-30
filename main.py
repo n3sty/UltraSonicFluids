@@ -72,7 +72,7 @@ def readout():
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
     
     # Read out the desired parameters of each sensor
-    [MF_LF] = liquiflow.readSingle(205)
+    MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
     [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple(143, 178, 179)
     
