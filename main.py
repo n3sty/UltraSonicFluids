@@ -40,6 +40,7 @@ def main():
             time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         except KeyboardInterrupt:
             writeData(path=path)
+            break
             
     
     return 0        
