@@ -9,6 +9,7 @@ import threading
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+global dataFrequency, gatherTime
 
 
 def main():
@@ -103,7 +104,7 @@ def writeData(path):
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
     """        
-    t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]    
+    t = datetime.datetime.now().strftime("%H:%M,%f")[:-5]    
 
     df.to_csv(path+"exp_" + t + ".csv", index=False)
     

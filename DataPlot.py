@@ -41,6 +41,11 @@ def main():
     """
     path = "./output.csv"
     df = importPlotData(path)
+    
+    labels = df[0]
+    
+    print(labels)
+    
     iterations = dataFrequency * gatherTime
 
     plot(df, 'MF_CORI', iterations)
