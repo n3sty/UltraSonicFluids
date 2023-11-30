@@ -22,7 +22,7 @@ def main():
     # Certain constants that influence the data gathering and the length/size of the measurement.
     dataFrequency = 4                       # Number of data samples per second
     iteration = 0                           # Loop iteration starts at index 0
-    gatherTime = 10                         # Time (sec) of data gathering
+    gatherTime = 120                        # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
        
     initialize()
@@ -31,12 +31,15 @@ def main():
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     iterations = gatherTime * dataFrequency
 
-    while iteration < iterations:
-        time.sleep(1 / dataFrequency)       # Runs every 1/f period        
-        threadUpdate = threading.Thread(target=updateDataframe, args=())
-        threadUpdate.start()
+    while True:
+        try:
+            time.sleep(1 / dataFrequency)       # Runs every 1/f period        
+            threadUpdate = threading.Thread(target=updateDataframe, args=())
+            threadUpdate.start()
+        except KeyboardInterrupt:
+            writeData(path=path)
         
-    writeData(path=path)
+        
     
     return 0        
 
