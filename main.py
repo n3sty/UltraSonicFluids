@@ -2,32 +2,35 @@
 
 """
 import pandas as pd                         # Data is stored in a Pandas dataframe
-import datetime
+import datetime                             
 import time
 from Sensor import Sensor
-import threading
+from arduino_readout import PressTemp
+from sensor_controler import sensor_controler
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 global dataFrequency, gatherTime
 
+# TODO: all defined functinos except main in different files
 
 def main():
     """
-    Main function encapsulates all other functions that provide the functionality
+    Main function encapsulates all other functions that proSvide the functionality
     for the script. The main first initializes all variables and structures, and
     then runs the while loop for all updates and data gathering functions.
     """
     global iteration, gatherTime, dataFrequency, path
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
-    dataFrequency = 10                       # Number of data samples per second
-    iteration = 0                           # Loop iteration starts at index 0
-    gatherTime = 60                         # Time (sec) of data gathering
+    dataFrequency = 10                                           # Number of data samples per second
+    iteration = 0                                                # Loop iteration starts at index 0
+    gatherTime = 60                                              # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
        
     # Runs the initialize function to read out all the sensors
     initialize()
+    
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
@@ -59,8 +62,8 @@ def initialize():
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
     liquiflow = Sensor("liquiflow", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
-    diffp = Sensor("diffp", "/dev/ttyUSB2", 4)       # Pressure drop Sensor location and node
-    coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)    # Coriolis flow Sensor location and node
+    diffp = Sensor("diffp", "/dev/ttyUSB2", 4)               # Pressure drop Sensor location and node
+    coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)         # Coriolis flow Sensor location and node
     
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     # TODO: Make dataframe and parameter collection automatically sizeable.
