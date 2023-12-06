@@ -25,6 +25,9 @@ class PressTemp:
         self.sens6 = None
 
     def setup(self, port=None, baud = 115200):
+        """
+        sets up the comport. If it doesnt have a defined comport, it finds the port
+        """
         if port != None:
             self.ArdiPort=port
         else:
@@ -39,6 +42,9 @@ class PressTemp:
         self.Ardi.readline()
 
     def getCvalues(self):
+        """
+        # TODO: uitleg voor wat hier gebeurd
+        """
         self.Ardi.write(str('2').encode())
         time.sleep(0.1)
         V=str(self.Ardi.readline())[2:-7]
@@ -58,6 +64,9 @@ class PressTemp:
         self.sens6.insert(0,0)
 
     def getData(self):
+        """
+        
+        """
         self.Ardi.write(str('1').encode())
         time.sleep(0.1)
         V=str(self.Ardi.readline())[2:-7]
@@ -66,11 +75,15 @@ class PressTemp:
         return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
 
     def calculateData(self, C, D1, D2):
-        dT = D2-C[5]*256   # 2**8 = 256
-        TEMP = 2000+dT*C[6] /8388608   # 2**23 = 8388608
-        OFF = C[2]*65536+(C[4]*dT)/128    # 2**16 = 65536    2**7 = 128
-        SENS = C[1]*32768+(C[3]*dT)/256    # 2**15 = 32768      2**8 = 256
-        P = (D1*SENS/2097152 - OFF)/8192    # 2**21 = 2097152    2**13 = 8192
+        """
+        
+        """
+        dT = D2-C[5]*256                    # 2**8 = 256
+        TEMP = 2000+dT*C[6] /8388608        # 2**23 = 8388608
+        OFF = C[2]*65536+(C[4]*dT)/128      # 2**16 = 65536         2**7 = 128
+        SENS = C[1]*32768+(C[3]*dT)/256     # 2**15 = 32768         2**8 = 256
+        P = (D1*SENS/2097152 - OFF)/8192    # 2**21 = 2097152       2**13 = 8192
+
         # return (P, TEMP/100)
         # second order temperature compensation
         if (TEMP < 2000):
@@ -81,6 +94,7 @@ class PressTemp:
             Ti = 2*dT**2/137438953472   # 2**37 = 137438953472
             OFFi = (TEMP-2000)**2/16
             SENSi = 0
+
         OFF2 = OFF - OFFi
         SENS2 = SENS - SENSi
         TEMP2=(TEMP-Ti)/100
