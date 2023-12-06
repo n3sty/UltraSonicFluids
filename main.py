@@ -8,6 +8,7 @@ from Sensor import Sensor
 from arduino_readout import PressTemp
 from sensor_controler import sensor_controler
 import warnings
+import threading
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 global dataFrequency, gatherTime
