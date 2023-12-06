@@ -11,16 +11,23 @@ from matplotlib.animation import FuncAnimation
 plt.style.use('fivethirtyeight')
 
 
-x_var = []
-y_var = []
+def ani_plot_initilize():
+    """
+    plots the data in real time
+    """
+    x_var = []
+    y_var = []
 
-index = count()
+    index = count()
 
-def animate(i):
+
+def plot_animate(i):
     x_var.append(next(index))
     y_var.append(random.randint(0, 5))
 
     plt.plot(x_var, y_var)
+
+
 
 
 animate = FuncAnimation(plt.gcf(), animate, interval=1000)

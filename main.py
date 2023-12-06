@@ -26,6 +26,7 @@ def main():
     gatherTime = 60                         # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
        
+    # Runs the initialize function to read out all the sensors
     initialize()
     
     # Loop containing al the update functions for reading data.
@@ -42,6 +43,7 @@ def main():
             writeData(path=path)
             break
     
+    # Write data to the defined path into a csv file
     writeData(path=path)
     
     return 0        
@@ -71,11 +73,11 @@ def readout():
     """ 
     Reads the data from the preformatted sensors
     Returns a tuple of defined data variables
-    # TODO: incorporate compatibility with all types of sensors
+    # TODO: incorporate compatibility with all types of sensors (mflf ) coriolus werkt 
     """
     # Getting the time of the measurement
     t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
-    
+
     # Read out the desired parameters of each sensor
     MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
