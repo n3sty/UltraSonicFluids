@@ -8,5 +8,5 @@ print(ard.getPort)
 
 while True:
     print(ard.getData())
-    print(ard.calculateData())
+    print(ard.getCvalues())
     time.sleep(0.5)
