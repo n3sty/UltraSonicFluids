@@ -38,6 +38,9 @@ class PressTemp:
                     self.ArdiPort = P.split(sep=' ')[0]
 
         self.Ardi = serial.Serial(self.ArdiPort, baud, timeout=1)
+        self.Ardi.open
+        print("open?")
+        print(self.Ardi.is_open)
         self.Ardi.readline()
         self.Ardi.readline()
 
