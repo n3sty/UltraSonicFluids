@@ -11,4 +11,6 @@ git pull is autmatically ran
 
 'la' is list all
 'pull' automatically pulls
+
+# aliases that still need to work
 'main' pulls everything, then runs python main.py and then pushes the data to github

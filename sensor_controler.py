@@ -1,6 +1,11 @@
-import pandas as pd
+import pandas as pd                         # Data is stored in a Pandas dataframe
+import datetime                             
+import time
 from Sensor import Sensor
+from arduino_readout import PressTemp
+import warnings
 
+warnings.simplefilter(action='ignore', category=FutureWarning)
 def initialize():
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
@@ -46,7 +51,7 @@ def updateDataframe():
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
     """    
-    global iteration
+    iteration = 0
     
     data = list(readout())
     df.loc[iteration] = data 
