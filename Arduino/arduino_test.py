@@ -1,4 +1,4 @@
-from arduino_readout import PressTemp
+from arduino_readout_simple import PressTemp
 import time
 import serial.tools.list_ports
 
@@ -7,6 +7,5 @@ ard.setup()
 print(ard.getPort)
 
 while True:
-    print(ard.getData())
-    print(ard.getCvalues())
-    time.sleep(0.5)
+    print(ard.readwrite())
+    time.sleep(1)
