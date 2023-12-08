@@ -6,7 +6,7 @@ import datetime
 import time
 from Sensor import Sensor
 from arduino_readout import PressTemp
-import sensor_controler
+import sensor_controler                     # plek waar alle oude code stond
 import warnings
 import threading
 warnings.simplefilter(action='ignore', category=FutureWarning)
