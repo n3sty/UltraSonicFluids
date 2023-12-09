@@ -101,6 +101,9 @@ class PressTemp:
         return (round(P2,3), round(TEMP2,3))
 
     def readwrite(self):
+        """
+        Test function to see if arduino response to input (1).
+        """
         self.Ardi.write(str("1").encode())
         return(self.Ardi.readline())
     
