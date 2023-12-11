@@ -80,7 +80,7 @@ class PressTemp:
     
     def getPort(self):
         """
-        Returns portnumber currently used by the arduino.
+        Returns port currently used by the arduino. Standard port for pi: "/dev/ttyACM0".
         """
         return self.ArdiPort
 

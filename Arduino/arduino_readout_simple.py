@@ -20,17 +20,11 @@ class PressTemp:
         if port != None:
             self.ArdiPort=port
         else:
+            # Arduino port on Raspberry pi.
             self.ArdiPort = "/dev/ttyACM0"
-            # ports = list(serial.tools.list_ports.comports())
-            # for p in ports:
-            #     P=str(p)
-            #     if P.find('Arduino')!=-1:
-            #         self.ArdiPort = P.split(sep=' ')[0]
 
         self.Ardi = serial.Serial(self.ArdiPort, baud, timeout=1)
-        self.Ardi.open
-        print("open?")
-        print(self.Ardi.is_open)
+        self.Ardi.open          # Open port to arduino
         self.Ardi.readline()
         self.Ardi.readline()
 
