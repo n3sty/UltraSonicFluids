@@ -13,7 +13,7 @@ plt.style.use('fivethirtyeight')
 
 def ani_plot_initilize():
     """
-    plots the data in real time
+    #plots the data in real time
     """
     x_var = []
     y_var = []
