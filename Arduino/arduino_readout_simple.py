@@ -60,14 +60,13 @@ class PressTemp:
         returns a list with the measurements.
         """
         self.Ardi.write(str('1').encode())
-
-        V_list = str(self.Ardi.readline())[2:-5]
+        V_list = [str(self.Ardi.readline())[2:-5]]
         # if len(V) > 0:
         #     if V[0]== 'I':
         #         return 0
         #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
 
-        return [V_list[0]]
+        return V_list[0]
     
     def getPort(self):
         """
