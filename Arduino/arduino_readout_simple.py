@@ -62,6 +62,7 @@ class PressTemp:
         self.Ardi.write(str('1').encode())
         time.sleep(0.1)
         V=str(self.Ardi.readline())[2:-7]
+        print(V)
         if V[0]=='I':
             V=[0,0,0,0,0,0]
         return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
