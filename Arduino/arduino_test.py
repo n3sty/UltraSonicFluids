@@ -10,4 +10,4 @@ ard.setup()
 
 while True:
     print(ard.getData()) 
-    time.sleep(0.5)
+    time.sleep(0.2)
