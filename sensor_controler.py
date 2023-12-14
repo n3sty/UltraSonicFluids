@@ -2,7 +2,7 @@ import pandas as pd                         # Data is stored in a Pandas datafra
 import datetime                             
 import time
 from Sensor import Sensor
-from arduino_readout import PressTemp
+from Arduino.arduino_readout import PressTemp
 import warnings
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -11,7 +11,7 @@ def initialize():
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global liquiflow, diffp, coriflow, df
+    global liquiflow, diffp, coriflow, df, arduino
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.

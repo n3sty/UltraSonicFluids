@@ -5,7 +5,7 @@ import pandas as pd                         # Data is stored in a Pandas datafra
 import datetime                             
 import time
 from Sensor import Sensor
-from arduino_readout import PressTemp
+from Arduino.arduino_readout import PressTemp
 import sensor_controler                     # plek waar alle oude code stond
 import warnings
 import threading
