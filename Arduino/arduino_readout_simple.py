@@ -65,8 +65,10 @@ class PressTemp:
         #     if V[0]== 'I':
         #         return 0
         #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
-        
-        return [self.Ardi.readline()]
+        V = [self.Ardi.readline()]
+        for ii in V:
+            V[ii] = float(ii)
+        return 
     
     def getPort(self):
         """
