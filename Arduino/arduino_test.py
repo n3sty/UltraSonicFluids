@@ -9,5 +9,5 @@ ard = PressTemp()
 ard.setup()
 
 while True:
-    print(ard.readwrite())  #write 1, receive measurement and print this.
-    time.sleep(1)
+    print(ard.getData()) 
+    time.sleep(0.5)

@@ -4,7 +4,10 @@ import serial
 import serial.tools.list_ports
 
 class PressTemp:
-
+    """
+    Class for connection between Arduino and Raspberry Pi over serial. 
+    With this class, the measurement-data can be transfered from Arduino to the Raspberry Pi.
+    """
     def __init__(self):
         self.ArdiPort = None
         self.Ardi = None
@@ -15,7 +18,8 @@ class PressTemp:
 
     def setup(self, port=None, baud = 115200):
         """
-        sets up the comport. If it doesnt have a defined comport, it finds the port
+        Sets up the comport for Arduino communication. 
+        Standard port on the Raspberry pi: "/dev/ttyACM0"
         """
         if port != None:
             self.ArdiPort=port
@@ -24,7 +28,7 @@ class PressTemp:
             self.ArdiPort = "/dev/ttyACM0"
 
         self.Ardi = serial.Serial(self.ArdiPort, baud, timeout=1)
-        self.Ardi.open          # Open port to arduino
+        self.Ardi.open          # Open port to Arduino
         self.Ardi.readline()
         self.Ardi.readline()
 
@@ -52,7 +56,8 @@ class PressTemp:
 
     def getData(self):
         """
-        
+        Sends "1" to the Arduino over serial, to receive the measurement data.
+        returns a list with the measurements.
         """
         self.Ardi.write(str('1').encode())
         time.sleep(0.1)
@@ -93,13 +98,6 @@ class PressTemp:
         TEMP2=(TEMP-Ti)/100
         P2=10*((D1*SENS2)/2097152-OFF2)/8192       # 2**21 = 2097152    2**13 = 8192
         return (round(P2,3), round(TEMP2,3))
-
-    def readwrite(self):
-        """
-        Test function to see if arduino response to input (1).
-        """
-        self.Ardi.write(str("1").encode())
-        return(self.Ardi.readline())
     
     def close(self):
         self.Ardi.close()
