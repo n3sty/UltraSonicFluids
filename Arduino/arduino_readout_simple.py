@@ -60,7 +60,7 @@ class PressTemp:
         returns a list with the measurements.
         """
         self.Ardi.write(str('1').encode())
-        V_list = [self.Ardi.readline()]
+        V_list = [self.Ardi.readline()[2:-5]]
         # V = str(self.Ardi.readline())[2:-5]
         # if len(V) > 0:
         #     if V[0]== 'I':
