@@ -105,11 +105,11 @@ void loop() {
     Serial.println("I received: ");
     Serial.println(A, DEC);
     
-    if (A == 49){ //Over serial: "1"
+    if (A == 49) { //Over serial: "1"
       // 1 Update pressure and temperature readings
       tcaselect(2);
       sensor2.read();
-      myVals[0] = 1.045 * sensor2.pressure();
+      myVals[0] = 1.045 * sensor2.pressure(); // waarom 1.045???
       myVals[1] = sensor2.temperature();
   
       tcaselect(4);
