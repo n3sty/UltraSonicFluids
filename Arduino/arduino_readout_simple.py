@@ -15,7 +15,7 @@ class PressTemp:
         self.sens2 = None
         self.sens4 = None
         self.sens6 = None
-
+        
     def setup(self, port=None, baud = 115200):
         """
         Sets up the comport for Arduino communication. 
@@ -63,8 +63,9 @@ class PressTemp:
         time.sleep(0.1)
         V=str(self.Ardi.readline())[2:-7]
         print(V)
-        if V[0]=='I':
-            V=[0,0,0,0,0,0]
+        if len(V) > 0:
+            if V[0]== 'I':
+                V = [0,0,0,0,0,0]
         #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
         return V
     
