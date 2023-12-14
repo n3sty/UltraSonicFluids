@@ -65,9 +65,7 @@ class PressTemp:
         #     if V[0]== 'I':
         #         return 0
         #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
-        V_list = [V.replace(";", ",", 6)]
-        for ii in V_list:
-            V_list[ii] = float(ii)
+        V_list = [V]
         return V_list
     
     def getPort(self):
