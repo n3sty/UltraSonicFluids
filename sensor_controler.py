@@ -19,7 +19,7 @@ def initialize():
     diffp = Sensor("diffp", "/dev/ttyUSB2", 4)               # Pressure drop Sensor location and node
     coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)         # Coriolis flow Sensor location and node
     arduino = PressTemp()                                    # Arduino serial connection
-    arduino.setup(port = "/dev/ttyACM0")                     # Initialises all Arduino sensors
+    arduino.setup()                     # Initialises all Arduino sensors
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     # TODO: Make dataframe and parameter collection automatically sizeable.
     df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
