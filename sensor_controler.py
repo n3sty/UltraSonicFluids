@@ -57,6 +57,7 @@ def readout():
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
     [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
     [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = PressTemp().getData() # list with 6 values
+    print(f'ard_p1 =: {Ard_P1}')
     
     # Concatenating results into a single data variable
     data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP, Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3)
