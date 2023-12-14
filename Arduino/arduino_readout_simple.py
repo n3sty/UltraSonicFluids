@@ -66,7 +66,7 @@ class PressTemp:
         #         return 0
         #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
         V_list = V_list.split(",", 6)
-        for ii in range(0,5):
+        for ii in range(0,6):
             V_list[ii] = float(V_list[ii])
         return V_list
     
