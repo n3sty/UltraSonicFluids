@@ -102,14 +102,12 @@ void loop() {
   if (Serial.available() > 0) {
     int A = Serial.read();  // input over Serial
     Serial.read();
-    Serial.println("I received: ");
-    Serial.println(A, DEC);
     
-    if (A == 49){ //Over serial: "1"
+    if (A == 49) { //Over serial: "1"
       // 1 Update pressure and temperature readings
       tcaselect(2);
       sensor2.read();
-      myVals[0] = 1.045 * sensor2.pressure();
+      myVals[0] = 1.045 * sensor2.pressure(); // waarom 1.045???
       myVals[1] = sensor2.temperature();
   
       tcaselect(4);
@@ -128,14 +126,16 @@ void loop() {
       }
     }
     
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 5; i++)
     {
       Serial.print(myVals[i]);
-      Serial.print("; ");
+      Serial.print(", ");
     }
+    Serial.print(myVals[5]);
+
     Serial.println("");
   }
-  delay(100);
+  delay(50);
 }
 
 
