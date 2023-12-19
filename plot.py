@@ -82,7 +82,7 @@ def plotData(fileName, singleWindow=False):
     plt.show()
 
 if __name__ == '__main__':
-    fileName = ''
+    fileName = 'data/EXP_12-19_1032.csv'
     if len(sys.argv) == 1:
         plotData(fileName)
     else:

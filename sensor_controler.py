@@ -2,8 +2,10 @@ import pandas as pd                         # Data is stored in a Pandas datafra
 import datetime                             
 import time
 from Sensor import Sensor
+from AnimationPlot import AnimationPlot
 from Arduino.arduino_readout_simple import PressTemp
 import warnings
+
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 def initialize():
@@ -11,7 +13,7 @@ def initialize():
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global liquiflow, diffp, coriflow, df, arduino
+    global liquiflow, diffp, coriflow, df, arduino, animationPlot
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
@@ -24,6 +26,8 @@ def initialize():
     # TODO: Make dataframe and parameter collection automatically sizeable.
 #    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
+
+    animationPlot = AnimationPlot(df, 'MF_LF', 50)
     
     return 0
 
@@ -87,6 +91,7 @@ def updateDataframe(iteration):
     data = list(readout())
     df.loc[iteration] = data 
     print(data)
+    animationPlot.updataData(df)
     iteration += 1
     
     return 0

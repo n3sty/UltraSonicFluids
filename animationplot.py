@@ -6,31 +6,44 @@ import random
 from itertools import count
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation
 
-plt.style.use('fivethirtyeight')
+class AnimationPlot:
+    def __init__(self, dataTable, parameter, dataPoints) -> None:
+        self.dataTable = dataTable
+        self.parameter = parameter
+        self.dataPoints = dataPoints
+        plotTitle = ''
+        plotX = 't'
+        plotY = ''
+        xData = dataTable['t'][-dataPoints:]
+        yData = np.array([])
+        if parameter == 'MF_LF' or parameter == 'MF_CORI':
+            plotTitle = 'Live mass flow'
+            plotY = 'flow [g/h]'
+        elif parameter == 'T':
+            plotTitle = 'Live temperature'
+            plotY = 'T [degC]'
+        elif parameter == 'RHO':
+            plotTitle = 'Live density'
+            plotY = '$\\rho$ [kg/m^3]'
+        elif parameter == 'DP':
+            plotTitle = 'Live DP'
+            plotY = 'DP [mbar]'
+        self.plotTitle = plotTitle
+        self.plotXLabel = plotX
+        self.plotYlabel = plotY
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 1, 1)
+        self.ax = ax
+        ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500)
+        plt.show()
 
+        def updataData(newDataTable):
+            self.dataTable = newDataTable
 
-def ani_plot_initilize():
-    """
-    #plots the data in real time
-    """
-    x_var = []
-    y_var = []
-
-    index = count()
-
-
-def plot_animate(i):
-    x_var.append(next(index))
-    y_var.append(random.randint(0, 5))
-
-    plt.plot(x_var, y_var)
-
-
-
-
-animate = FuncAnimation(plt.gcf(), animate, interval=1000)
-
-plt.tight_layout()
-plt.show()
+        def animate(i, xData, yData):
+            xData = self.dataTable['t'][-self.dataPoints:]
+            yData = self.dataTable[self.parameter][-self.dataPoints:]
+            self.ax.plot(xData, yData)
