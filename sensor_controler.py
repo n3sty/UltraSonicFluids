@@ -22,10 +22,22 @@ def initialize():
     arduino.setup()                     # Initialises all Arduino sensors
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     # TODO: Make dataframe and parameter collection automatically sizeable.
-    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
+#    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
+    df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
     
     return 0
 
+def sweepdP():
+    maxParameter = 436
+    values = []
+    for i in range(maxParameter):
+        parameterIndex = i + 1
+        try:
+            values.append({'index': parameterIndex, 'value': diffp.readSingle(parameterIndex)})
+        except:
+            continue
+       # values.append(liquiflow.readSingle(parameterIndex))
+    return values
 
 def readout():
     """ 
@@ -34,7 +46,7 @@ def readout():
     # TODO: incorporate compatibility with all types of sensors (mflf ) coriolus werkt 
     """
     # Getting the time of the measurement
-    t = datetime.datetime.now().strftime("%H:%M:%S,%f")[:-5]
+    t = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5]
 
     # Read out the desired parameters of each sensor
 
@@ -55,20 +67,22 @@ def readout():
 
     MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
-    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
-    [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
+    P_DP = diffp.readSingle(205)
+#    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
+#    [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
     
     # Concatenating results into a single data variable
-    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP, Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3)
+#    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP, Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3)
+    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
 
     return data
 
-def updateDataframe():
+def updateDataframe(iteration):
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
     """    
-    iteration = 0
+    #iteration = 0
     
     data = list(readout())
     df.loc[iteration] = data 
@@ -85,8 +99,11 @@ def writeData(path):
     Returns nothing.
     """        
     t = datetime.datetime.now().strftime("%H:%M")    
-
     df.to_csv(path + "/EXP_" + t + ".csv", index=False)
+   # MF_LF = sweepdP()
+   # with open(path + "/MF_LF", 'w') as file:
+   #     for item in MF_LF:
+   #         file.write('index: ' + str(item['index']) + ' value: ' + str(item['value']) + "\n")
     
     return 0
     

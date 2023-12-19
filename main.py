@@ -24,7 +24,7 @@ def main():
     # Certain constants that influence the data gathering and the length/size of the measurement.
     dataFrequency = 10                                           # Number of data samples per second
     iteration = 0                                                # Loop iteration starts at index 0
-    gatherTime = 60                                              # Time (sec) of data gathering
+    gatherTime = 3600                                              # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
        
     # Runs the initialize function to read out all the sensors
@@ -34,16 +34,16 @@ def main():
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     iterations = gatherTime * dataFrequency
-
     while iteration < iterations:
         try:
-            threadUpdate = threading.Thread(target=sensor_controler.updateDataframe, args=())
+            threadUpdate = threading.Thread(target=sensor_controler.updateDataframe, args=(iteration,))
             threadUpdate.start()
             
             time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         except KeyboardInterrupt:
             sensor_controler.writeData(path=path)
             break
+        iteration = iteration + 1
     
     # Write data to the defined path into a csv file
     sensor_controler.writeData(path=path)
