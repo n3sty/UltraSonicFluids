@@ -40,10 +40,10 @@ class AnimationPlot:
         ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500)
         plt.show()
 
-        def updataData(newDataTable):
+        def updataData(self, newDataTable):
             self.dataTable = newDataTable
 
-        def animate(i, xData, yData):
+        def animate(self, i, xData, yData):
             xData = self.dataTable['time'][-self.dataPoints:]
             yData = self.dataTable[self.parameter][-self.dataPoints:]
             self.ax.plot(xData, yData)
