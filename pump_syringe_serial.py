@@ -7,6 +7,8 @@ import serial.tools.list_ports
 import sys
 import glob
 
+print('doet die uberhaupt wel iets?')
+
 def getOpenPorts():
     # portinfo = []
     # for port in serial.tools.list_ports.comports():
@@ -174,7 +176,7 @@ class PumpSyringe(object):
     def setTime(self, timer):
         command = 'set time ' + str(timer)
         response = self.sendCommand(command)
-        return response
+        return responseS
 
     def getParameterLimits(self):
         command = 'read limit parameter'
