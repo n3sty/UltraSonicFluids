@@ -3,6 +3,7 @@ import datetime
 import time
 from Sensor import Sensor
 from Arduino.arduino_readout_simple import PressTemp
+import pump_syringe_serial
 import warnings
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
