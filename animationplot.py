@@ -25,7 +25,7 @@ def initialize():
     
     parameter = 'MF_LF'
     dataPoints = 50
-    
+
     plotTitle = ''
     plotXLabel = 't'
     plotY = ''
@@ -45,6 +45,6 @@ def initialize():
         plotYlabel = 'DP [mbar]'
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500)
+    ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500, cache_frame_data=False)
     plt.show()
 
