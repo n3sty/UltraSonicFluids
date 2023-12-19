@@ -10,41 +10,41 @@ import numpy as np
 import sensor_controler
 from matplotlib.animation import FuncAnimation
 
-global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
+
+
 
 def animate(i, xData, yData):
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:]
     yData = df[parameter][-dataPoints:]
     ax.plot(xData, yData)
 
-def initialize(dataTable, parameter, dataPoints):
-    dataTable = dataTable
-    parameter = parameter
-    dataPoints = dataPoints
+def initialize():
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
+    
+    parameter = 'MF_LF'
+    dataPoints = 50
+
     plotTitle = ''
-    plotX = 't'
+    plotXLabel = 't'
     plotY = ''
     xData = np.array([])
     yData = np.array([])
     if parameter == 'MF_LF' or parameter == 'MF_CORI':
         plotTitle = 'Live mass flow'
-        plotY = 'flow [g/h]'
+        plotYlabel = 'flow [g/h]'
     elif parameter == 'T':
         plotTitle = 'Live temperature'
-        plotY = 'T [degC]'
+        plotYlabel = 'T [degC]'
     elif parameter == 'RHO':
         plotTitle = 'Live density'
-        plotY = '$\\rho$ [kg/m^3]'
+        plotYlabel = '$\\rho$ [kg/m^3]'
     elif parameter == 'DP':
         plotTitle = 'Live DP'
-        plotY = 'DP [mbar]'
-    plotTitle = plotTitle
-    plotXLabel = plotX
-    plotYlabel = plotY
+        plotYlabel = 'DP [mbar]'
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    ax = ax
-    ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500)
+    ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500, cache_frame_data=False)
     plt.show()
 
