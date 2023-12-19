@@ -3,6 +3,7 @@ import datetime
 import time
 from Sensor import Sensor
 from Arduino.arduino_readout_simple import PressTemp
+import pump_syringe_serial
 import warnings
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -46,7 +47,7 @@ def readout():
     # TODO: incorporate compatibility with all types of sensors (mflf ) coriolus werkt 
     """
     # Getting the time of the measurement
-    t = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5]
+    t = datetime.datetime.now().strftime("%H:%M:%s,%f")[:-5]
 
     # Read out the desired parameters of each sensor
 
