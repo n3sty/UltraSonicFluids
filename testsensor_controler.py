@@ -20,7 +20,7 @@ def initialize():
     diffp = Sensor("diffp", "/dev/ttyUSB2", 4)               # Pressure drop Sensor location and node
     coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)         # Coriolis flow Sensor location and node
     arduino = PressTemp()                                    # Arduino serial connection
-    arduino.setup()                     # Initialises all Arduino sensors
+    arduino.setup()                                          # Initialises all Arduino sensors
 
     pump_syringe_serial.PumpSyringe("/dev/ttyUSB4", 9600, x = 0, mode = 0, verbose=False)
 

@@ -45,7 +45,7 @@ def main():
         iteration = iteration + 1
     
     # Write data to the defined path into a csv file
-    testsensor_controler.writeData(path=path)
+    # testsensor_controler.writeData(path=path)
     
     return 0        
 
