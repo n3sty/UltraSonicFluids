@@ -30,7 +30,7 @@ def getOpenPorts():
             s = serial.Serial(port)
             s.close()
             result.append(port)
-            #print(port)
+            print(port)
         except (OSError, serial.SerialException):
             pass
     print(result)
