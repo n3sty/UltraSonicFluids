@@ -91,7 +91,7 @@ def updateDataframe(iteration):
     data = list(readout())
     df.loc[iteration] = data 
     print(data)
-    animationPlot.updataData(df)
+    # animationPlot.updataData(df)
     iteration += 1
     
     return 0
