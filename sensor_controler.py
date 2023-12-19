@@ -46,7 +46,11 @@ def readout():
     # TODO: incorporate compatibility with all types of sensors (mflf ) coriolus werkt 
     """
     # Getting the time of the measurement
+<<<<<<< HEAD
     t = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5]
+=======
+    t = datetime.datetime.now().strftime("%m:%d:%H:%M,%f")[:-5]
+>>>>>>> 497d2e73656ea9502356a984353ed0ca29a2ce7e
 
     # Read out the desired parameters of each sensor
 

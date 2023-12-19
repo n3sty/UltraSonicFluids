@@ -29,7 +29,6 @@ def main():
        
     # Runs the initialize function to read out all the sensors
     sensor_controler.initialize()
-    #sensor_controler.initialize()
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
