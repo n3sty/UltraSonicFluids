@@ -48,6 +48,8 @@ class PressTemp:
     def getCvalues(self):
         """
         # TODO: uitleg voor wat hier gebeurd
+
+        --Wordt momenteel niet ondersteund voor de arduino library.--
         """
         self.Ardi.write(str('2').encode())
         time.sleep(0.1)
