@@ -30,10 +30,10 @@ def getOpenPorts():
             s = serial.Serial(port)
             s.close()
             result.append(port)
-            #print(port)
+            print(port)
         except (OSError, serial.SerialException):
             pass
-    #print(result)
+    print(result)
     return result
 
 def parsePortName(portinfo):
@@ -48,6 +48,7 @@ def parsePortName(portinfo):
             if 'usbserial' in port[0]:
                 namelist = port[0].split('-')
                 portlist.append(namelist[-1])
+    print(portlist)
     return portlist
 
 class PumpSyringe(object):
