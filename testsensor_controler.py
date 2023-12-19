@@ -22,6 +22,8 @@ def initialize():
     arduino = PressTemp()                                    # Arduino serial connection
     arduino.setup()                                          # Initialises all Arduino sensors
 
+    pump_syringe_serial.getOpenPorts()
+
     pump_syringe_serial.PumpSyringe("/dev/ttyUSB4", 9600, x = 0, mode = 0, verbose=False)
 
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
