@@ -2,7 +2,7 @@ import pandas as pd                         # Data is stored in a Pandas datafra
 import datetime                             
 import time
 from Sensor import Sensor
-from AnimationPlot import AnimationPlot
+from animationplot import AnimationPlot
 from Arduino.arduino_readout_simple import PressTemp
 import warnings
 
