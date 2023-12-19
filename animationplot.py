@@ -7,43 +7,44 @@ from itertools import count
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import sensor_controler
 from matplotlib.animation import FuncAnimation
 
-class AnimationPlot:
-    def __init__(self, dataTable, parameter, dataPoints) -> None:
-        self.dataTable = dataTable
-        self.parameter = parameter
-        self.dataPoints = dataPoints
-        plotTitle = ''
-        plotX = 't'
-        plotY = ''
-        xData = np.array([])
-        yData = np.array([])
-        if parameter == 'MF_LF' or parameter == 'MF_CORI':
-            plotTitle = 'Live mass flow'
-            plotY = 'flow [g/h]'
-        elif parameter == 'T':
-            plotTitle = 'Live temperature'
-            plotY = 'T [degC]'
-        elif parameter == 'RHO':
-            plotTitle = 'Live density'
-            plotY = '$\\rho$ [kg/m^3]'
-        elif parameter == 'DP':
-            plotTitle = 'Live DP'
-            plotY = 'DP [mbar]'
-        self.plotTitle = plotTitle
-        self.plotXLabel = plotX
-        self.plotYlabel = plotY
-        fig = plt.figure()
-        ax = fig.add_subplot(1, 1, 1)
-        self.ax = ax
-        ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500)
-        plt.show()
+global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
 
-        def updataData(self, newDataTable):
-            self.dataTable = newDataTable
+def animate(i, xData, yData):
+    df = sensor_controler.getData()
+    xData = df['time'][-dataPoints:]
+    yData = df[parameter][-dataPoints:]
+    ax.plot(xData, yData)
 
-        def animate(self, i, xData, yData):
-            xData = self.dataTable['time'][-self.dataPoints:]
-            yData = self.dataTable[self.parameter][-self.dataPoints:]
-            self.ax.plot(xData, yData)
+def initialize(dataTable, parameter, dataPoints):
+    dataTable = dataTable
+    parameter = parameter
+    dataPoints = dataPoints
+    plotTitle = ''
+    plotX = 't'
+    plotY = ''
+    xData = np.array([])
+    yData = np.array([])
+    if parameter == 'MF_LF' or parameter == 'MF_CORI':
+        plotTitle = 'Live mass flow'
+        plotY = 'flow [g/h]'
+    elif parameter == 'T':
+        plotTitle = 'Live temperature'
+        plotY = 'T [degC]'
+    elif parameter == 'RHO':
+        plotTitle = 'Live density'
+        plotY = '$\\rho$ [kg/m^3]'
+    elif parameter == 'DP':
+        plotTitle = 'Live DP'
+        plotY = 'DP [mbar]'
+    plotTitle = plotTitle
+    plotXLabel = plotX
+    plotYlabel = plotY
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    ax = ax
+    ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500)
+    plt.show()
+
