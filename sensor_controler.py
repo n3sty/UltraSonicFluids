@@ -25,8 +25,6 @@ def initialize():
     # TODO: Make dataframe and parameter collection automatically sizeable.
 #    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
-
-    pump_syringe_serial.getOpenPorts()
     
     return 0
 
@@ -49,7 +47,7 @@ def readout():
     # TODO: incorporate compatibility with all types of sensors (mflf ) coriolus werkt 
     """
     # Getting the time of the measurement
-    t = datetime.datetime.now().strftime("%m_%d_%H_%M_%s_%f")[:-5]
+    t = datetime.datetime.now().strftime("%H:%M:%s,%f")[:-5]
 
     # Read out the desired parameters of each sensor
 
@@ -101,7 +99,7 @@ def writeData(path):
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
     """        
-    t = datetime.datetime.now().strftime("%m_%d_%H_%M")    
+    t = datetime.datetime.now().strftime("%m-%d_%H%M")    
     df.to_csv(path + "/EXP_" + t + ".csv", index=False)
    # MF_LF = sweepdP()
    # with open(path + "/MF_LF", 'w') as file:
