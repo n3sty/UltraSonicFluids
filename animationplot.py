@@ -10,18 +10,22 @@ import numpy as np
 import sensor_controler
 from matplotlib.animation import FuncAnimation
 
-global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
 
-parameter = 'MF_LF'
-dataPoints = 50
+
 
 def animate(i, xData, yData):
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:]
     yData = df[parameter][-dataPoints:]
     ax.plot(xData, yData)
 
 def initialize():
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
+    
+    parameter = 'MF_LF'
+    dataPoints = 50
+    
     plotTitle = ''
     plotXLabel = 't'
     plotY = ''
