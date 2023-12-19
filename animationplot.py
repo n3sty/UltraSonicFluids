@@ -44,6 +44,6 @@ class AnimationPlot:
             self.dataTable = newDataTable
 
         def animate(i, xData, yData):
-            xData = self.dataTable['t'][-self.dataPoints:]
+            xData = self.dataTable['time'][-self.dataPoints:]
             yData = self.dataTable[self.parameter][-self.dataPoints:]
             self.ax.plot(xData, yData)
