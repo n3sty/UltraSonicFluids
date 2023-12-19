@@ -17,7 +17,7 @@ class AnimationPlot:
         plotTitle = ''
         plotX = 't'
         plotY = ''
-        xData = dataTable['t'][-dataPoints:]
+        xData = np.array([])
         yData = np.array([])
         if parameter == 'MF_LF' or parameter == 'MF_CORI':
             plotTitle = 'Live mass flow'
