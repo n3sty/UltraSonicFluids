@@ -99,7 +99,7 @@ def writeData(path):
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
     """        
-    t = datetime.datetime.now().strftime("%H:%M")    
+    t = datetime.datetime.now().strftime("%m_%d_%H_%M")    
     df.to_csv(path + "/EXP_" + t + ".csv", index=False)
    # MF_LF = sweepdP()
    # with open(path + "/MF_LF", 'w') as file:
