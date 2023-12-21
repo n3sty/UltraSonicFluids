@@ -14,6 +14,8 @@ import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=True)
+
 def initialize():
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
@@ -34,7 +36,7 @@ def initialize():
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
     # TODO: uitleg over pump
-    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=True)
+    
     syringe.openConnection()
 
     # Voer waardes in
@@ -134,6 +136,9 @@ def writeData(path):
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
     """        
+
+    syringe.stopPump()
+
     t = datetime.datetime.now().strftime("%m-%d_%H%M")    
     df.to_csv(path + "/EXP_" + t + ".csv", index=False)
    # MF_LF = sweepdP()

@@ -41,7 +41,6 @@ def main():
             time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         except KeyboardInterrupt:
             sensor_controler.writeData(path=path)
-            syringe.stopPump()
             break
         iteration = iteration + 1
     
