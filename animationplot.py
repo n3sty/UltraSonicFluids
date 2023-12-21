@@ -49,6 +49,6 @@ def initialize():
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     line = ax.plot([], [])
-    ani = FuncAnimation(fig, animate, interval=500, blit=False)
+    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False)
     plt.show()
 
