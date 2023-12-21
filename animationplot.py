@@ -50,5 +50,5 @@ def initialize():
     ax = fig.add_subplot(1, 1, 1)
     line = ax.plot([], [])
     ani = FuncAnimation(fig, animate, interval=500)
-    plt.show()
+    # plt.show()
 

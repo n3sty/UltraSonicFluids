@@ -6,6 +6,7 @@ import animationplot
 from Arduino.arduino_readout_simple import PressTemp
 import warnings
 import threading
+import matplotlib.pyplot as plt
 
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -29,6 +30,7 @@ def initialize():
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
     animationThread = threading.Thread(target=animationplot.initialize, args=())
     animationThread.start()
+    plt.show()
     # animationplot.initialize()
     
     return 0
