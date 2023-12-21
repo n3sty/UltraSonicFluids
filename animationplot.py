@@ -13,23 +13,27 @@ from matplotlib.animation import FuncAnimation
 
 
 
-def animate(i, parameter, dataPoints, df):
+def animate(i, parameter, dataPoints, conn):
     # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     # df = sensor_controler.getData()
+    if conn.poll():
+        df = conn.recv()
+    else:
+        return line,
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
     print(df)
     ax.plot(xData, yData)
     # line.set_data(xData, yData)
-    
 
     return line,
 
-def initialize(df):
+def initialize(conn):
     global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     
     parameter = 'MF_LF'
     dataPoints = 50
+    dataFrequency = 10 
 
     plotTitle = ''
     plotXLabel = 't'
@@ -51,6 +55,6 @@ def initialize(df):
     # fig = plt.figure()
     fig, ax = plt.subplots()
     line = ax.plot([], [])
-    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints, df,))
+    ani = FuncAnimation(fig, animate, interval=((1/dataFrequency)*1000), blit=False, cache_frame_data=False, fargs=(parameter, dataPoints, conn,))
     plt.show()
 
