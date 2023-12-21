@@ -31,13 +31,13 @@ def initialize():
     syringe.setUnits('μL/hr')
     syringe.setDiameter(4.5)
     syringe.setDelay(0)
-    syringe.setTime(2)
+    syringe.setTime(5)
     syringe.setVolume(1600)
     syringe.setRate(100)
 
     syringe.startPump()
-    time.sleep(2)
-    syringe.stopPump()
+    
+    #syringe.stopPump()
     syringe.closeConnection()
 
 
