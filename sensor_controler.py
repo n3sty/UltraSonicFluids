@@ -122,8 +122,8 @@ def updateDataframe(iteration):
     
     data = list(readout())
     df.loc[iteration] = data 
-    if animationConnSend.poll(0.1):
-        animationConnSend.send(df)
+    # if animationConnSend.poll(0.1):
+    animationConnSend.send(df)
     print(data)
     # animationPlot.updataData(df)
     iteration += 1
