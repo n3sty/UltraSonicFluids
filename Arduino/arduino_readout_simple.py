@@ -57,8 +57,7 @@ class PressTemp:
                 V_list[ii] = float(V_list[ii])
             return V_list
         except serial.SerialException as e:
-            if self.verbose:
-                print(e)
+            print(e)
             self.close()
         finally: 
             self.close()
