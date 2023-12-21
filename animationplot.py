@@ -31,6 +31,7 @@ def initialize(conn):
     
     parameter = 'MF_LF'
     dataPoints = 50
+    dataFrequency = 10 
 
     plotTitle = ''
     plotXLabel = 't'
@@ -52,6 +53,6 @@ def initialize(conn):
     # fig = plt.figure()
     fig, ax = plt.subplots()
     line = ax.plot([], [])
-    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints, conn,))
+    ani = FuncAnimation(fig, animate, interval=((1/dataFrequency)*1000), blit=False, cache_frame_data=False, fargs=(parameter, dataPoints, conn,))
     plt.show()
 
