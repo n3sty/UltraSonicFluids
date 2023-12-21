@@ -14,7 +14,7 @@ from matplotlib.animation import FuncAnimation
 
 
 def animate(i):
-    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
+    # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
