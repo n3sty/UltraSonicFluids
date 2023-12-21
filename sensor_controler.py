@@ -7,15 +7,19 @@ from Arduino.arduino_readout_simple import PressTemp
 import warnings
 import threading
 import multiprocessing
-
+from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
+import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
+
+global df
 def initialize():
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global liquiflow, diffp, coriflow, df, arduino, animationPlot
+    global liquiflow, diffp, coriflow, arduino, animationPlot
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
@@ -28,7 +32,7 @@ def initialize():
     # TODO: Make dataframe and parameter collection automatically sizeable.
 #    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
-    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(df,))
+    animationJob = multiprocessing.Process(target=initialize, args=())
     animationJob.start()
     # animationThread = threading.Thread(target=animationplot.initialize, args=())
     # animationThread.start()
@@ -101,9 +105,47 @@ def updateDataframe(iteration):
     
     return 0
 
-def getData():
+def animate(i, parameter, dataPoints):
+    # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
+    # df = sensor_controler.getData()
+    xData = df['time'][-dataPoints:].tolist()
+    yData = df[parameter][-dataPoints:].tolist()
+    print(df)
+    ax.plot(xData, yData)
+    # line.set_data(xData, yData)
     
-    return df
+
+    return line,
+
+def initialize():
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
+    
+    parameter = 'MF_LF'
+    dataPoints = 50
+
+    plotTitle = ''
+    plotXLabel = 't'
+    plotYlabel = ''
+    xData = np.array([])
+    yData = np.array([])
+    if parameter == 'MF_LF' or parameter == 'MF_CORI':
+        plotTitle = 'Live mass flow'
+        plotYlabel = 'flow [g/h]'
+    elif parameter == 'T':
+        plotTitle = 'Live temperature'
+        plotYlabel = 'T [degC]'
+    elif parameter == 'RHO':
+        plotTitle = 'Live density'
+        plotYlabel = '$\\rho$ [kg/m^3]'
+    elif parameter == 'DP':
+        plotTitle = 'Live DP'
+        plotYlabel = 'DP [mbar]'
+    # fig = plt.figure()
+    fig, ax = plt.subplots()
+    line = ax.plot([], [])
+    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
+    plt.show()
+
 
 
 def writeData(path):
