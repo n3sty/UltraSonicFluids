@@ -172,7 +172,7 @@ class PumpSyringe(object):
     def setTime(self, timer):
         command = 'set time ' + str(timer)
         response = self.sendCommand(command)
-        return responseS
+        return response
 
     def getParameterLimits(self):
         command = 'read limit parameter'
