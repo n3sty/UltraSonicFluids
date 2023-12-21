@@ -22,9 +22,9 @@ def initialize():
     arduino = PressTemp()                                    # Arduino serial connection
     arduino.setup()                                          # Initialises all Arduino sensors
 
-    #pump_syringe_serial.parsePortName(pump_syringe_serial.getOpenPorts())
+    pump_syringe_serial.parsePortName(pump_syringe_serial.getOpenPorts())
 
-    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB4", 9600, x = 0, mode = 0, verbose=True)
+    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=True)
 
     syringe.openConnection()
 
