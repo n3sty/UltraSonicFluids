@@ -16,7 +16,7 @@ from matplotlib.animation import FuncAnimation
 def animate(i, parameter, dataPoints):
     # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     # df = sensor_controler.getData()
-    if conn.poll():
+    if conn.poll(0.1):
         df = conn.recv()
     else:
         return line,
