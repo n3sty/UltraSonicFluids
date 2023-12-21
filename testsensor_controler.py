@@ -24,7 +24,7 @@ def initialize():
 
     #pump_syringe_serial.parsePortName(pump_syringe_serial.getOpenPorts())
 
-    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB4", 9600, x = 0, mode = 0, verbose=True)
+    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB5", 9600, x = 0, mode = 0, verbose=True)
 
     syringe.openConnection()
 
