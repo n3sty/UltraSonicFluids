@@ -4,6 +4,7 @@ import time
 from Sensor import Sensor
 import animationplot
 from Arduino.arduino_readout_simple import PressTemp
+import pump_syringe_serial
 import warnings
 import threading
 import multiprocessing
@@ -32,6 +33,24 @@ def initialize():
 #    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
+    # TODO: uitleg over pump
+    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=True)
+    syringe.openConnection()
+
+    # Voer waardes in
+    syringe.setUnits('μL/min')
+    syringe.setDiameter(4.5)
+    syringe.setVolume(1600)
+    syringe.setRate(100)
+
+    # als je timer en delay wilt toevoegen
+#   syringe.setTime(2)
+#   syringe.setDelay(0)
+
+    syringe.startPump()
+
+
+    # TODO: uitleg rond animation
     animationConnRecv, animationConnSend = multiprocessing.Pipe()
     animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationConnRecv,))
     animationJob.start()
