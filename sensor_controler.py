@@ -12,12 +12,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
+
+global df
 def initialize():
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global liquiflow, diffp, coriflow, df, arduino, animationPlot
+    global liquiflow, diffp, coriflow, arduino, animationPlot
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
