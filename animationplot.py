@@ -19,8 +19,7 @@ def animate(i):
     xData = df['time'][-dataPoints:]
     yData = df[parameter][-dataPoints:]
     # ax.plot(xData, yData)
-    line.set_xdata(xData)
-    line.set_ydata(yData)
+    line.set_data(xData, yData)
 
     return line,
 
@@ -50,6 +49,6 @@ def initialize():
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     line = ax.plot([], [])
-    ani = FuncAnimation(fig=fig, func=animate, fargs=(), interval=500, cache_frame_data=False)
+    ani = FuncAnimation(fig, animate, interval=500)
     plt.show()
 
