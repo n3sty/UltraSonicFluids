@@ -16,13 +16,15 @@ from matplotlib.animation import FuncAnimation
 def animate(i, parameter, dataPoints, conn):
     # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     # df = sensor_controler.getData()
-    df = conn.recv()
+    if conn.poll():
+        df = conn.recv()
+    else:
+        return line,
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
     print(df)
     ax.plot(xData, yData)
     # line.set_data(xData, yData)
-    
 
     return line,
 
