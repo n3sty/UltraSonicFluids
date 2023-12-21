@@ -28,7 +28,7 @@ def initialize():
     # TODO: Make dataframe and parameter collection automatically sizeable.
 #    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
     df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
-    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(df))
+    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(df,))
     animationJob.start()
     # animationThread = threading.Thread(target=animationplot.initialize, args=())
     # animationThread.start()
