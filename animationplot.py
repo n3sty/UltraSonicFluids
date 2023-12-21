@@ -18,8 +18,9 @@ def animate(i):
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:]
     yData = df[parameter][-dataPoints:]
-    # ax.plot(xData, yData)
-    line.set_data(xData, yData)
+    ax.plot(xData, yData)
+    # line.set_data(xData, yData)
+    
 
     return line,
 
