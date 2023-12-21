@@ -102,7 +102,6 @@ def updateDataframe(iteration):
     return 0
 
 def getData():
-    global df
     return df
 
 
