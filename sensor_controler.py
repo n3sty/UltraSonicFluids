@@ -101,8 +101,11 @@ def updateDataframe(iteration):
     
     data = list(readout())
     df.loc[iteration] = data 
-    if animationConnSend.poll():
+    # if animationConnSend.poll():
+    try:
         animationConnSend.send(df)
+    except:
+        print('Animatieplot pipe niet aan het ontvangen')
     print(data)
     # animationPlot.updataData(df)
     iteration += 1
