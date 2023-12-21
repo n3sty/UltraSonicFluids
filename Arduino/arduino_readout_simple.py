@@ -55,12 +55,14 @@ class PressTemp:
             V_list = V_list.split(",", 5)
             for ii in range(0,6):
                 V_list[ii] = float(V_list[ii])
-            return V_list
         except serial.SerialException as e:
             print(e)
             self.close()
         finally: 
             self.close()
+        
+        return V_list
+        
     
     def getPort(self):
         """
