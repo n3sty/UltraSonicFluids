@@ -56,6 +56,6 @@ def initialize(c):
     # fig = plt.figure()
     fig, ax = plt.subplots()
     line = ax.plot([], [])
-    ani = FuncAnimation(fig, animate, interval=10, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
+    ani = FuncAnimation(fig, animate, interval=(1/dataFrequency)*1000, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
     plt.show()
 
