@@ -16,7 +16,10 @@ from matplotlib.animation import FuncAnimation
 def animate(i, parameter, dataPoints):
     # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     # df = sensor_controler.getData()
-    df = conn.recv()
+    if conn.poll():
+        df = conn.recv()
+    else:
+        return line,
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
     print(df)
@@ -53,6 +56,6 @@ def initialize(c):
     # fig = plt.figure()
     fig, ax = plt.subplots()
     line = ax.plot([], [])
-    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
+    ani = FuncAnimation(fig, animate, interval=10, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
     plt.show()
 
