@@ -14,18 +14,18 @@ from matplotlib.animation import FuncAnimation
 
 
 def animate(i):
-    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, plt
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:]
     yData = df[parameter][-dataPoints:]
     # ax.plot(xData, yData)
-    plt.set_xdata(xData)
-    plt.set_ydata(yData)
+    line.set_xdata(xData)
+    line.set_ydata(yData)
 
-    return plt,
+    return line,
 
 def initialize():
-    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, plt
+    global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     
     parameter = 'MF_LF'
     dataPoints = 50
@@ -49,7 +49,7 @@ def initialize():
         plotYlabel = 'DP [mbar]'
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    plt = ax.plot([], [])
+    line = ax.plot([], [])
     ani = FuncAnimation(fig=fig, func=animate, fargs=(), interval=500, cache_frame_data=False)
     plt.show()
 
