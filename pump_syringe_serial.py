@@ -144,7 +144,7 @@ class PumpSyringe(object):
         return response
 
     def setUnits(self, units):
-        units_dict = {'mL/min': '0', 'mL/hr': '1', 'μL/min': '2', 'μL/hr': 3}
+        units_dict = {'mL/min': '0', 'mL/hr': '1', 'μL/min': '2', 'μL/hr': '3'}
         command = 'set units ' + str(units_dict[units])
         response = self.sendCommand(command)
         return response
