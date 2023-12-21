@@ -75,33 +75,6 @@ class PressTemp:
         Returns portnumber currently used by the arduino.
         """
         return self.ArdiPort
-
-    def calculateData(self, C, D1, D2):
-        """
-        
-        """
-        dT = D2-C[5]*256                    # 2**8 = 256
-        TEMP = 2000+dT*C[6] /8388608        # 2**23 = 8388608
-        OFF = C[2]*65536+(C[4]*dT)/128      # 2**16 = 65536         2**7 = 128
-        SENS = C[1]*32768+(C[3]*dT)/256     # 2**15 = 32768         2**8 = 256
-        P = (D1*SENS/2097152 - OFF)/8192    # 2**21 = 2097152       2**13 = 8192
-
-        # return (P, TEMP/100)
-        # second order temperature compensation
-        if (TEMP < 2000):
-            Ti=3*dT**2/8589934592  # 2**33 = 8589934592
-            OFFi = 3*(TEMP-2000)**2/2
-            SENSi = 5*(TEMP-2000)**2/8
-        else:
-            Ti = 2*dT**2/137438953472   # 2**37 = 137438953472
-            OFFi = (TEMP-2000)**2/16
-            SENSi = 0
-
-        OFF2 = OFF - OFFi
-        SENS2 = SENS - SENSi
-        TEMP2=(TEMP-Ti)/100
-        P2=10*((D1*SENS2)/2097152-OFF2)/8192       # 2**21 = 2097152    2**13 = 8192
-        return (round(P2,3), round(TEMP2,3))
     
     def close(self):
         self.Ardi.close()
