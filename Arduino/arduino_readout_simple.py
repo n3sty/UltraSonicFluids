@@ -20,6 +20,7 @@ class PressTemp:
         """
         Sets up the comport for Arduino communication. 
         Standard port on the Raspberry pi: "/dev/ttyACM0"
+        returns nothing
         """
         if port != None:
             self.ArdiPort=port
@@ -27,15 +28,19 @@ class PressTemp:
             # Arduino port on Raspberry pi.
             self.ArdiPort = "/dev/ttyACM0"
 
-        self.Ardi = serial.Serial(self.ArdiPort, baud, timeout=1)
-        self.Ardi.open          # Open port to Arduino
-        self.Ardi.readline()
-        self.Ardi.readline()
+        try: 
+            self.Ardi = serial.Serial(self.ArdiPort, baud, timeout=1)
+            self.Ardi.open          # Open port to Arduino
+            self.Ardi.readline()
+            self.Ardi.readline()
+        except serial.SerialException as e:
+            print(e)
 
     def getData(self):
         """
-        Sends "1" to the Arduino over serial, to receive the measurement data.
-        returns a list with the measurements.
+        Sends "1" to the Arduino over serial, to receive the (by the arduino calculated) measurement data
+        for pressure and temperature.
+        The function returns a list with the measurements.
         """
         try: 
             self.Ardi.write(str('1').encode())              # write over serial to the arduino
@@ -65,4 +70,8 @@ class PressTemp:
         return self.ArdiPort
     
     def close(self):
+        """
+    	This function closes the serial port to the arduino.
+        returns nothing
+        """
         self.Ardi.close()
