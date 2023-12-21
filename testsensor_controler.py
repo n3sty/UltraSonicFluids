@@ -27,12 +27,14 @@ def initialize():
     syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB3", 9600, x = 0, mode = 0, verbose=True)
 
     syringe.openConnection()
+
     syringe.setUnits('μL/hr')
     syringe.setDiameter(4.5)
     syringe.setDelay(0)
     syringe.setTime(2)
     syringe.setVolume(1600)
     syringe.setRate(100)
+    
     syringe.startPump()
     time.sleep(2)
     syringe.stopPump()
