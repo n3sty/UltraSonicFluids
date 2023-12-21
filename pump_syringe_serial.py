@@ -198,6 +198,7 @@ class PumpSyringe(object):
         command = 'pump status'
         response = self.sendCommand(command)
         return response
+    
     def addMode(self, command):
         if self.mode == 0:
             return command

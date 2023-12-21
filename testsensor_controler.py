@@ -31,6 +31,7 @@ def initialize():
     syringe.startPump()
     time.sleep(0.5)
     syringe.stopPump()
+    syringe.closeConnection()
 
 
 
