@@ -42,24 +42,19 @@ class PressTemp:
         for pressure and temperature.
         The function returns a list with the measurements.
         """
-        try: 
-            self.Ardi.write(str('1').encode())              # write over serial to the arduino
+       
+        self.Ardi.write(str('1').encode())              # write over serial to the arduino
 
-            #TODO delay of while loop hier voor timing issue??
+        #TODO delay of while loop hier voor timing issue??
 
-            V_list = str(self.Ardi.readline())[2:-5]        # read over serial to the pi
-            # if len(V) > 0:
-            #     if V[0]== 'I':
-            #         return 0
-            #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
-            V_list = V_list.split(",", 5)
-            for ii in range(0,6):
-                V_list[ii] = float(V_list[ii])
-        except serial.SerialException as e:
-            print(e)
-            self.close()
-        finally: 
-            self.close()
+        V_list = str(self.Ardi.readline())[2:-5]        # read over serial to the pi
+        # if len(V) > 0:
+        #     if V[0]== 'I':
+        #         return 0
+        #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
+        V_list = V_list.split(",", 5)
+        for ii in range(0,6):
+            V_list[ii] = float(V_list[ii])
         
         return V_list
         
