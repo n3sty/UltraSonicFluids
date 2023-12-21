@@ -46,8 +46,8 @@ def initialize():
     elif parameter == 'DP':
         plotTitle = 'Live DP'
         plotYlabel = 'DP [mbar]'
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
+    # fig = plt.figure()
+    fig, ax = fig.add_subplots()
     line = ax.plot([], [])
     ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False)
     plt.show()
