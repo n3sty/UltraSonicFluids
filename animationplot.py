@@ -13,7 +13,7 @@ from matplotlib.animation import FuncAnimation
 
 
 
-def animate(i):
+def animate(i, parameter, dataPoints):
     # global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:].tolist()
@@ -51,6 +51,6 @@ def initialize():
     # fig = plt.figure()
     fig, ax = plt.subplots()
     line = ax.plot([], [])
-    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False)
+    ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
     plt.show()
 
