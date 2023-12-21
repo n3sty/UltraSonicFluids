@@ -32,43 +32,31 @@ class PressTemp:
         self.Ardi.readline()
         self.Ardi.readline()
 
-    def getCvalues(self):
-        """
-        # TODO: uitleg voor wat hier gebeurd
-        """
-        self.Ardi.write(str('2').encode())
-        time.sleep(0.1)
-        V=str(self.Ardi.readline())[2:-7]
-        self.sens2 = [float(v) for v in V.split(';')]
-        self.sens2.insert(0,0)
-
-        self.Ardi.write(str('4').encode())
-        time.sleep(0.1)
-        V=str(self.Ardi.readline())[2:-7]
-        self.sens4 = [float(v) for v in V.split(';')]
-        self.sens4.insert(0,0)
-
-        self.Ardi.write(str('6').encode())
-        time.sleep(0.1)
-        V=str(self.Ardi.readline())[2:-7]
-        self.sens6 = [float(v) for v in V.split(';')]
-        self.sens6.insert(0,0)
-
     def getData(self):
         """
         Sends "1" to the Arduino over serial, to receive the measurement data.
         returns a list with the measurements.
         """
-        self.Ardi.write(str('1').encode())
-        V_list = str(self.Ardi.readline())[2:-5]
-        # if len(V) > 0:
-        #     if V[0]== 'I':
-        #         return 0
-        #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
-        V_list = V_list.split(",", 5)
-        for ii in range(0,6):
-            V_list[ii] = float(V_list[ii])
-        return V_list
+        try: 
+            self.Ardi.write(str('1').encode())              # write over serial to the arduino
+
+            #TODO delay of while loop hier voor timing issue??
+
+            V_list = str(self.Ardi.readline())[2:-5]        # read over serial to the pi
+            # if len(V) > 0:
+            #     if V[0]== 'I':
+            #         return 0
+            #return [x*float(v) for v,x in zip(V.split(';'),[100, 1, 101, 1, 100, 1])]
+            V_list = V_list.split(",", 5)
+            for ii in range(0,6):
+                V_list[ii] = float(V_list[ii])
+            return V_list
+        except serial.SerialException as e:
+            if self.verbose:
+                print(e)
+            self.close()
+        finally: 
+            self.close()
     
     def getPort(self):
         """
