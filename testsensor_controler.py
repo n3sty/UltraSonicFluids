@@ -28,6 +28,9 @@ def initialize():
 
     syringe.openConnection()
     syringe.getResponse()
+    syringe.startPump()
+    time.sleep(0.5)
+    syringe.stopPump()
 
 
 
