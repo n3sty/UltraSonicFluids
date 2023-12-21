@@ -13,7 +13,7 @@ from matplotlib.animation import FuncAnimation
 
 
 
-def animate(i, xData, yData):
+def animate(i):
     global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax
     df = sensor_controler.getData()
     xData = df['time'][-dataPoints:]
@@ -28,7 +28,7 @@ def initialize():
 
     plotTitle = ''
     plotXLabel = 't'
-    plotY = ''
+    plotYlabel = ''
     xData = np.array([])
     yData = np.array([])
     if parameter == 'MF_LF' or parameter == 'MF_CORI':
@@ -45,6 +45,6 @@ def initialize():
         plotYlabel = 'DP [mbar]'
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    ani = FuncAnimation(fig, animate, fargs=(xData, yData), interval=500, cache_frame_data=False)
+    ani = FuncAnimation(fig=fig, func=animate, fargs=(), interval=500, cache_frame_data=False)
     plt.show()
 
