@@ -16,10 +16,12 @@ from matplotlib.animation import FuncAnimation
 def animate(i):
     global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line
     df = sensor_controler.getData()
-    xData = df['time'][-dataPoints:]
-    yData = df[parameter][-dataPoints:]
-    # ax.plot(xData, yData)
-    line.set_data(xData, yData)
+    xData = df['time'][-dataPoints:].tolist()
+    yData = df[parameter][-dataPoints:].tolist()
+    print(yData)
+    ax.plot(xData, yData)
+    # line.set_data(xData, yData)
+    
 
     return line,
 
@@ -46,8 +48,8 @@ def initialize():
     elif parameter == 'DP':
         plotTitle = 'Live DP'
         plotYlabel = 'DP [mbar]'
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
+    # fig = plt.figure()
+    fig, ax = plt.subplots()
     line = ax.plot([], [])
     ani = FuncAnimation(fig, animate, interval=500, blit=False, cache_frame_data=False)
     plt.show()
