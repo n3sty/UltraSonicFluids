@@ -102,6 +102,7 @@ def updateDataframe(iteration):
     return 0
 
 def getData():
+    df.to_numpy()
     return df
 
 
