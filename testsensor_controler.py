@@ -27,6 +27,7 @@ def initialize():
     syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB3", 9600, x = 0, mode = 0, verbose=True)
 
     syringe.openConnection()
+    syringe.getResponse()
 
 
 
