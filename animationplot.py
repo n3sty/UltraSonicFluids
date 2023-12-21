@@ -22,9 +22,9 @@ def animate(i, parameter, dataPoints):
         return line,
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
-    print(df)
-    ax.plot(xData, yData)
-    # line.set_data(xData, yData)
+    print(yData)
+    # ax.plot(xData, yData)
+    line.set_data(xData, yData)
 
     return line,
 
