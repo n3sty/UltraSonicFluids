@@ -14,7 +14,7 @@ import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=True)
+syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
 
 def initialize():
     """
@@ -137,6 +137,7 @@ def writeData(path):
     Returns nothing.
     """        
 
+    # Due to keyboard interupt the syringe needs to stop when the keyboard interupt is activated
     syringe.stopPump()
 
     t = datetime.datetime.now().strftime("%m-%d_%H%M")    
