@@ -7,6 +7,7 @@ from itertools import count
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import sensor_controler
 from matplotlib.animation import FuncAnimation
 
@@ -22,7 +23,7 @@ def animate(i, parameter, dataPoints):
     # else:
     #     return line,
     df = queue.get()
-    if df == None:
+    if not isinstance(df, pd.DataFrame):
         return []
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
