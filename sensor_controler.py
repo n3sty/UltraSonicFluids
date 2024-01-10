@@ -57,7 +57,7 @@ def initialize(use_syringe=False):
     # animationConnRecv, animationConnSend = multiprocessing.Pipe()
     animationQueue = multiprocessing.Queue(maxsize=10)
     animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
-    # animationJob.start()
+    animationJob.start()
 
     # animationThread = threading.Thread(target=animationplot.initialize, args=(animationConnRecv,))
     # animationThread.start()
@@ -125,7 +125,7 @@ def updateDataframe(iteration):
     data = list(readout())
     df.loc[iteration] = data 
     # if animationConnSend.poll(0.1):
-    # animationQueue.put(df)
+    animationQueue.put(df)
     print(data)
     # animationPlot.updataData(df)
     iteration += 1
