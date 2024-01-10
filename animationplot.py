@@ -24,12 +24,15 @@ def animate(i, parameter, dataPoints):
     #     return line,
     df = queue.get()
     if not isinstance(df, pd.DataFrame):
-        return []
+        return
     xData = df['time'][-dataPoints:].tolist()
     yData = df[parameter][-dataPoints:].tolist()
-    print(yData)
-    # ax.plot(xData, yData)
-    line.set_data(xData, yData)
+    if len(xData) == 0:
+        return
+    line.set_xdata(xData)
+    line.set_ydata(yData)
+    ax.set_ylim(min(yData), max(yData))
+    ax.set_xlim(min(xData), max(xData))
 
     return line,
 
@@ -60,7 +63,7 @@ def initialize(q):
         plotYlabel = 'DP [mbar]'
     # fig = plt.figure()
     fig, ax = plt.subplots()
-    line = ax.plot([], [])
+    line = ax.plot([], [])[0]
     ani = FuncAnimation(fig, animate, interval=5, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
     plt.show()
 
