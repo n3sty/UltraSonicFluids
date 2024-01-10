@@ -24,13 +24,13 @@ def animate(i, parameter, dataPoints):
     #     return line,
     df = queue.get()
     if not isinstance(df, pd.DataFrame):
-        return
-    # xData = df['time'][-dataPoints:].tolist()
-    xData = df['time'].tolist()
-    # yData = df[parameter][-dataPoints:].tolist()
-    yData = df[parameter].tolist()
+        return line,
+    xData = df['time'][-dataPoints:].tolist()
+    # xData = df['time'].tolist()
+    yData = df[parameter][-dataPoints:].tolist()
+    # yData = df[parameter].tolist()
     if len(xData) == 0:
-        return
+        return line,,
     line.set_xdata(xData)
     line.set_ydata(yData)
     ax.set_ylim(min(yData), max(yData))
@@ -43,7 +43,7 @@ def initialize(q):
     queue = q
     
     parameter = 'MF_CORI'
-    dataPoints = 50
+    dataPoints = 600
     dataFrequency = 10 
 
     plotTitle = ''
@@ -66,6 +66,6 @@ def initialize(q):
     # fig = plt.figure()
     fig, ax = plt.subplots()
     line = ax.plot([], [])[0]
-    ani = FuncAnimation(fig, animate, interval=10, blit=False, cache_frame_data=False, fargs=(parameter, dataPoints,))
+    ani = FuncAnimation(fig, animate, interval=100, blit=True, cache_frame_data=False, fargs=(parameter, dataPoints,))
     plt.show()
 
