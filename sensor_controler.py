@@ -55,7 +55,7 @@ def initialize(use_syringe=False):
 
     # TODO: uitleg rond animation
     # animationConnRecv, animationConnSend = multiprocessing.Pipe()
-    animationQueue = multiprocessing.Queue(maxsize=10)
+    animationQueue = multiprocessing.Queue(maxsize=2)
     animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
     animationJob.start()
 
