@@ -32,8 +32,8 @@ def initialize(start_pump=False):
     arduino.setup()                     # Initialises all Arduino sensors
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
     # TODO: Make dataframe and parameter collection automatically sizeable.
-#    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
-    df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
+    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
+#    df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
     # TODO: uitleg over pump
     
@@ -55,8 +55,8 @@ def initialize(start_pump=False):
 
     # TODO: uitleg rond animation
     # animationConnRecv, animationConnSend = multiprocessing.Pipe()
-    animationQueue = multiprocessing.Queue(maxsize=10)
-    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    # animationQueue = multiprocessing.Queue(maxsize=10)
+    # animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
     # animationJob.start()
 
     # animationThread = threading.Thread(target=animationplot.initialize, args=(animationConnRecv,))
@@ -105,7 +105,7 @@ def readout():
 
     MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
-    P_DP = diffp.readSingle(205)
+   # P_DP = diffp.readSingle(205)
     [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
     [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
     
