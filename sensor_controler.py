@@ -21,7 +21,7 @@ def initialize(start_pump=False):
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global liquiflow, diffp, coriflow, arduino, df, animationPlot, animationConnSend
+    global liquiflow, diffp, coriflow, arduino, df, animationPlot, animationQueue
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
@@ -54,9 +54,10 @@ def initialize(start_pump=False):
 
 
     # TODO: uitleg rond animation
-    animationConnRecv, animationConnSend = multiprocessing.Pipe()
-    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationConnRecv,))
-    animationJob.start()
+    # animationConnRecv, animationConnSend = multiprocessing.Pipe()
+    animationQueue = multiprocessing.Queue(maxsize=10)
+    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    # animationJob.start()
 
     # animationThread = threading.Thread(target=animationplot.initialize, args=(animationConnRecv,))
     # animationThread.start()
@@ -123,8 +124,8 @@ def updateDataframe(iteration):
     
     data = list(readout())
     df.loc[iteration] = data 
-    if animationConnSend.poll(0.1):
-        animationConnSend.send(df)
+    # if animationConnSend.poll(0.1):
+    # animationQueue.put(df)
     print(data)
     # animationPlot.updataData(df)
     iteration += 1
