@@ -30,7 +30,7 @@ def animate(i, parameter, dataPoints):
     yData = df[parameter][-dataPoints:].tolist()
     # yData = df[parameter].tolist()
     if len(xData) == 0:
-        return line,,
+        return line,
     line.set_xdata(xData)
     line.set_ydata(yData)
     ax.set_ylim(min(yData), max(yData))
