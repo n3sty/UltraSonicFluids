@@ -2,17 +2,26 @@ import pandas as pd                         # Data is stored in a Pandas datafra
 import datetime                             
 import time
 from Sensor import Sensor
+import animationplot
 from Arduino.arduino_readout_simple import PressTemp
 import pump_syringe_serial
 import warnings
+import threading
+import multiprocessing
+from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
+import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
-def initialize():
+
+syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
+
+def initialize(start_pump=False):
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
     """    
-    global liquiflow, diffp, coriflow, df, arduino
+    global liquiflow, diffp, coriflow, arduino, df, animationPlot, animationQueue
     
     # Connecting the instruments. Both USB port (tty**** on Linux, COM* on Windows) 
     # and node have to be specified. Additional sensors can also be added here.
@@ -20,33 +29,39 @@ def initialize():
     diffp = Sensor("diffp", "/dev/ttyUSB2", 4)               # Pressure drop Sensor location and node
     coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)         # Coriolis flow Sensor location and node
     arduino = PressTemp()                                    # Arduino serial connection
-    arduino.setup()                                          # Initialises all Arduino sensors
+    arduino.setup()                     # Initialises all Arduino sensors
+    # Dataframe of pandas has a nice structure which requires no further changes for the output file.
+    # TODO: Make dataframe and parameter collection automatically sizeable.
+    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
+#    df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
-    #pump_syringe_serial.parsePortName(pump_syringe_serial.getOpenPorts())
-
-    syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=True)
-
+    # TODO: uitleg over pump
+    
     syringe.openConnection()
 
+    # Voer waardes in
     syringe.setUnits('μL/min')
     syringe.setDiameter(4.5)
-    syringe.setDelay(0)
-    syringe.setTime(2)
     syringe.setVolume(1600)
     syringe.setRate(100)
 
-    syringe.startPump()
-    
-    #syringe.stopPump()
-    syringe.closeConnection()
+    # als je timer en delay wilt toevoegen
+#   syringe.setTime(2)
+#   syringe.setDelay(0)
+
+    if start_pump == True:
+        syringe.startPump()
 
 
+    # TODO: uitleg rond animation
+    # animationConnRecv, animationConnSend = multiprocessing.Pipe()
+    # animationQueue = multiprocessing.Queue(maxsize=10)
+    # animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    # animationJob.start()
 
-
-    # Dataframe of pandas has a nice structure which requires no further changes for the output file.
-    # TODO: Make dataframe and parameter collection automatically sizeable.
-#    df = pd.DataFrame(columns=["Time", "MF_LF", "T_CORI", "MF_CORI", "RHO_CORI", "P_DP", "Pin_DP", "Pout_DP", "Ard_P1", "Ard_T1", "Ard_P2", "Ard_T2", "Ard_P3", "Ard_T3"])
-    df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
+    # animationThread = threading.Thread(target=animationplot.initialize, args=(animationConnRecv,))
+    # animationThread.start()
+    # animationplot.initialize()
     
     return 0
 
@@ -69,7 +84,7 @@ def readout():
     # TODO: incorporate compatibility with all types of sensors (mflf ) coriolus werkt 
     """
     # Getting the time of the measurement
-    t = datetime.datetime.now().strftime("%H:%M:%s,%f")[:-5]
+    t = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5]
 
     # Read out the desired parameters of each sensor
 
@@ -90,13 +105,13 @@ def readout():
 
     MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
-    P_DP = diffp.readSingle(205)
-#    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
-#    [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
+   # P_DP = diffp.readSingle(205)
+    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
+    [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
     
     # Concatenating results into a single data variable
-#    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP, Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3)
-    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
+    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP, Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3)
+#    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
 
     return data
 
@@ -109,11 +124,13 @@ def updateDataframe(iteration):
     
     data = list(readout())
     df.loc[iteration] = data 
+    # if animationConnSend.poll(0.1):
+    # animationQueue.put(df)
     print(data)
+    # animationPlot.updataData(df)
     iteration += 1
     
     return 0
-
 
 def writeData(path):
     """
@@ -121,6 +138,10 @@ def writeData(path):
     Writes the data gathered in the last iteration to a .csv file.
     Returns nothing.
     """        
+
+    # Due to keyboard interupt the syringe needs to stop when the keyboard interupt is activated
+    syringe.stopPump()
+
     t = datetime.datetime.now().strftime("%m-%d_%H%M")    
     df.to_csv(path + "/EXP_" + t + ".csv", index=False)
    # MF_LF = sweepdP()

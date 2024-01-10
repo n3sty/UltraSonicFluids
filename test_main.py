@@ -6,7 +6,7 @@ import datetime
 import time
 from Sensor import Sensor
 from Arduino.arduino_readout import PressTemp
-import testsensor_controler                     # plek waar alle oude code stond
+import test_sensor_controler                     # plek waar alle oude code stond
 import warnings
 import threading
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -28,24 +28,25 @@ def main():
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
        
     # Runs the initialize function to read out all the sensors
-    testsensor_controler.initialize()
+    # also starts the pump (you can find the set values in sensor_controler)
+    test_sensor_controler.initialize(start_pump=False)
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     iterations = gatherTime * dataFrequency
     while iteration < iterations:
         try:
-            threadUpdate = threading.Thread(target=testsensor_controler.updateDataframe, args=(iteration,))
+            threadUpdate = threading.Thread(target=test_sensor_controler.updateDataframe, args=(iteration,))
             threadUpdate.start()
             
             time.sleep(1 / dataFrequency)       # Runs every 1/f period        
         except KeyboardInterrupt:
-            testsensor_controler.writeData(path=path)
+            test_sensor_controler.writeData(path=path)
             break
         iteration = iteration + 1
     
     # Write data to the defined path into a csv file
-    # testsensor_controler.writeData(path=path)
+    test_sensor_controler.writeData(path=path)
     
     return 0        
 
