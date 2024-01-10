@@ -16,7 +16,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
 
-def initialize():
+def initialize(start_pump=False):
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
@@ -49,7 +49,8 @@ def initialize():
 #   syringe.setTime(2)
 #   syringe.setDelay(0)
 
-    syringe.startPump()
+    if start_pump == True:
+        syringe.startPump()
 
 
     # TODO: uitleg rond animation
