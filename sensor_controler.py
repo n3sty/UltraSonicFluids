@@ -16,7 +16,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
 
-def initialize(start_pump=False):
+def initialize(use_syringe=False):
     """
     For initializing all sensors and instruments, defining the initial values and for setting up the Pandas dataframe.
     Returns nothing.    
@@ -37,19 +37,19 @@ def initialize(start_pump=False):
 
     # TODO: uitleg over pump
     
-    syringe.openConnection()
+    if use_syringe == True:
+        syringe.openConnection()
 
-    # Voer waardes in
-    syringe.setUnits('μL/min')
-    syringe.setDiameter(4.5)
-    syringe.setVolume(1600)
-    syringe.setRate(100)
+        # Voer waardes in
+        syringe.setUnits('μL/min')
+        syringe.setDiameter(4.5)
+        syringe.setVolume(1600)
+        syringe.setRate(100)
 
-    # als je timer en delay wilt toevoegen
-#   syringe.setTime(2)
-#   syringe.setDelay(0)
-
-    if start_pump == True:
+        #   als je timer en delay wilt toevoegen
+        #syringe.setTime(2)
+        #syringe.setDelay(0)
+        
         syringe.startPump()
 
 
@@ -132,7 +132,7 @@ def updateDataframe(iteration):
     
     return 0
 
-def writeData(path):
+def writeData(path, use_syringe=False):
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Writes the data gathered in the last iteration to a .csv file.
@@ -140,7 +140,8 @@ def writeData(path):
     """        
 
     # Due to keyboard interupt the syringe needs to stop when the keyboard interupt is activated
-    syringe.stopPump()
+    if use_syringe == True:
+        syringe.stopPump()
 
     t = datetime.datetime.now().strftime("%m-%d_%H%M")    
     df.to_csv(path + "/EXP_" + t + ".csv", index=False)
