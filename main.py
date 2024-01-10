@@ -27,9 +27,9 @@ def main():
     gatherTime = 3600                                              # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
-    use_syringe = True
+    use_syringe = False
 
-    print(f'use_syringe ={use_syringe}')
+    print(f'use_syringe = {use_syringe}')
        
     # Runs the initialize function to read out all the sensors
     # also starts the pump (you can find the set values in sensor_controler)
