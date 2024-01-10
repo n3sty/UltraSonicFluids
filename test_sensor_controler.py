@@ -73,27 +73,13 @@ def readout():
     # Getting the time of the measurement
     t = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5]
 
-    # Read out the desired parameters of each sensor
-
-    # for MF_LF you can use:
-    #       181 for fluid temperature
-    #       251 for thermal conductivity (misschien handig?)
-    #       245 for capacity unit type temperature
-    #       246 for capacity unit type pressure
-
-    # 245 and 246 are for the conversion of mass flow to volume flow
-    
-    # what you can not use:
-    #       151 normal volume flow
-    #       152 volume flow
-    #       198 for mass flow
 
 
 
     MF_LF = liquiflow.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
-   # P_DP = diffp.readSingle(205)
-    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
+    P_DP = diffp.readSingle(205)
+#    [P_DP, Pin_DP, Pout_DP] = diffp.readMultiple([143, 178, 179])
     [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
     
     # Concatenating results into a single data variable
