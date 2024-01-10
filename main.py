@@ -26,10 +26,14 @@ def main():
     iteration = 0                                                # Loop iteration starts at index 0
     gatherTime = 3600                                              # Time (sec) of data gathering
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
+
+    use_syringe = False
+
+    print(f'use_syringe = {use_syringe}')
        
     # Runs the initialize function to read out all the sensors
     # also starts the pump (you can find the set values in sensor_controler)
-    sensor_controler.initialize(start_pump=False)
+    sensor_controler.initialize(use_syringe=use_syringe)
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
@@ -46,7 +50,7 @@ def main():
         iteration = iteration + 1
     
     # Write data to the defined path into a csv file
-    sensor_controler.writeData(path=path)
+    sensor_controler.writeData(path=path, use_syringe=use_syringe)
     
     return 0        
 
