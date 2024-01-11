@@ -30,8 +30,10 @@ def main():
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
     use_syringe = False
+    activate_animation = False
 
     print(f'use_syringe = {use_syringe}')
+    print(f'activate_animation = {activate_animation}')
        
     # Runs the initialize function to read out all the sensors
     # also starts the pump (you can find the set values in sensor_controler)
@@ -40,14 +42,16 @@ def main():
     # initialize animation plot
     animationQueue = multiprocessing.Queue(maxsize=2)
     animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
-    animationJob.start()
+    
+    if activate_animation == True:
+        animationJob.start()
 
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     iterations = gatherTime * dataFrequency
     while iteration < iterations:
         try:
-            threadUpdate = threading.Thread(target=sensor_controler.updateDataframe, args=(iteration, animationQueue,))
+            threadUpdate = threading.Thread(target=sensor_controler.updateDataframe, args=(iteration, animationQueue, activate_animation))
             threadUpdate.start()
             
             time.sleep(1 / dataFrequency)       # Runs every 1/f period        
