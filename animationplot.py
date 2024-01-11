@@ -38,7 +38,7 @@ def animate(i, parameter, dataPoints):
 
     return line,
 
-def initialize(q, activate_animation):
+def initialize(q):
     global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line, queue
     queue = q
     
@@ -67,6 +67,5 @@ def initialize(q, activate_animation):
     fig, ax = plt.subplots()
     line = ax.plot([], [])[0]
     ani = FuncAnimation(fig, animate, interval=100, blit=True, cache_frame_data=False, fargs=(parameter, dataPoints,))
-    if activate_animation == True:
-        plt.show()
+    plt.show()
 
