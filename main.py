@@ -39,8 +39,9 @@ def main():
 
     # initialize animation plot
     animationQueue = multiprocessing.Queue(maxsize=2)
-    animationplot.initialize(animationQueue)
-    
+    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    animationJob.start()
+
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     iterations = gatherTime * dataFrequency
