@@ -8,7 +8,6 @@ import pump_syringe_serial
 import warnings
 import threading
 import multiprocessing
-from matplotlib.animation import FuncAnimation
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -55,9 +54,9 @@ def initialize(use_syringe=False):
 
     # TODO: uitleg rond animation
     # animationConnRecv, animationConnSend = multiprocessing.Pipe()
-    animationQueue = multiprocessing.Queue(maxsize=2)
-    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
-    animationJob.start()
+    # animationQueue = multiprocessing.Queue(maxsize=2)
+    # animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    # animationJob.start()
 
     # animationThread = threading.Thread(target=animationplot.initialize, args=(animationConnRecv,))
     # animationThread.start()
@@ -115,7 +114,7 @@ def readout():
 
     return data
 
-def updateDataframe(iteration):
+def updateDataframe(iteration, q):
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
@@ -125,7 +124,7 @@ def updateDataframe(iteration):
     data = list(readout())
     df.loc[iteration] = data 
     # if animationConnSend.poll(0.1):
-    animationQueue.put(df)
+    q.put(df)
     print(data)
     # animationPlot.updataData(df)
     iteration += 1

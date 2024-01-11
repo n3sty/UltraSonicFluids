@@ -9,6 +9,8 @@ from Arduino.arduino_readout import PressTemp
 import sensor_controler                     # plek waar alle oude code stond
 import warnings
 import threading
+import multiprocessing
+import animationplot
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 global dataFrequency, gatherTime
@@ -34,13 +36,17 @@ def main():
     # Runs the initialize function to read out all the sensors
     # also starts the pump (you can find the set values in sensor_controler)
     sensor_controler.initialize(use_syringe=use_syringe)
+
+    # initialize animation plot
+    animationQueue = multiprocessing.Queue(maxsize=2)
+    animationplot.initialize(animationQueue)
     
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
     iterations = gatherTime * dataFrequency
     while iteration < iterations:
         try:
-            threadUpdate = threading.Thread(target=sensor_controler.updateDataframe, args=(iteration,))
+            threadUpdate = threading.Thread(target=sensor_controler.updateDataframe, args=(iteration, animationQueue,))
             threadUpdate.start()
             
             time.sleep(1 / dataFrequency)       # Runs every 1/f period        
