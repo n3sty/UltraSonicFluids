@@ -25,10 +25,10 @@ def animate(i, parameter, dataPoints):
     df = queue.get()
     if not isinstance(df, pd.DataFrame):
         return line,
-    xData = df['time'][-dataPoints:].tolist()
-    # xData = df['time'].tolist()
-    yData = df[parameter][-dataPoints:].tolist()
-    # yData = df[parameter].tolist()
+    # xData = df['time'][-dataPoints:].tolist()
+    xData = df['time'].tolist()
+    # yData = df[parameter][-dataPoints:].tolist()
+    yData = df[parameter].tolist()
     if len(xData) == 0:
         return line,
     line.set_xdata(xData)
