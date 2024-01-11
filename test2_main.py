@@ -40,7 +40,7 @@ def main():
     # initialize animation plot
     animationQueue = multiprocessing.Queue(maxsize=2)
     animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
-    #animationJob.start()
+    animationJob.start()
 
     # Loop containing al the update functions for reading data.
     # TODO: Remove sleep, to keep the time in between data gathers usable.
