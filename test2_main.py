@@ -10,7 +10,7 @@ import test2_sensor_controler                     # plek waar alle oude code sto
 import warnings
 import threading
 import multiprocessing
-#import animationplot
+import animationplot
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 global dataFrequency, gatherTime
@@ -38,8 +38,8 @@ def main():
     test2_sensor_controler.initialize(use_syringe=use_syringe)
 
     # initialize animation plot
-    #animationQueue = multiprocessing.Queue(maxsize=2)
-    ##animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    animationQueue = multiprocessing.Queue(maxsize=2)
+    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
     #animationJob.start()
 
     # Loop containing al the update functions for reading data.
