@@ -120,7 +120,7 @@ def updateDataframe(iteration, q, activate_animation=False):
     # if animationConnSend.poll(0.1):
 
     if activate_animation == True:
-        q.put(df)
+        q.put(df.tail(600))
 
     print(data)
     # animationPlot.updataData(df)
