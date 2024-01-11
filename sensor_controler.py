@@ -27,6 +27,7 @@ def initialize(use_syringe=False):
     liquiflow = Sensor("liquiflow", "/dev/ttyUSB2", 7)       # bl100 Sensor location and node
     diffp = Sensor("diffp", "/dev/ttyUSB2", 4)               # Pressure drop Sensor location and node
     coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)         # Coriolis flow Sensor location and node
+    
     arduino = PressTemp()                                    # Arduino serial connection
     arduino.setup()                     # Initialises all Arduino sensors
     # Dataframe of pandas has a nice structure which requires no further changes for the output file.
@@ -64,17 +65,6 @@ def initialize(use_syringe=False):
     
     return 0
 
-def sweepdP():
-    maxParameter = 436
-    values = []
-    for i in range(maxParameter):
-        parameterIndex = i + 1
-        try:
-            values.append({'index': parameterIndex, 'value': diffp.readSingle(parameterIndex)})
-        except:
-            continue
-       # values.append(liquiflow.readSingle(parameterIndex))
-    return values
 
 def readout():
     """ 
@@ -128,7 +118,7 @@ def updateDataframe(iteration, q, activate_animation=False):
     data = list(readout())
     df.loc[iteration] = data 
     # if animationConnSend.poll(0.1):
-    
+
     if activate_animation == True:
         q.put(df)
 

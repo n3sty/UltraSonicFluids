@@ -30,7 +30,7 @@ def main():
     path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
     use_syringe = False
-    activate_animation = True
+    activate_animation = False
 
     print(f'use_syringe = {use_syringe}')
     print(f'activate_animation = {activate_animation}')
