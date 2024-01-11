@@ -118,7 +118,7 @@ def readout():
 
     return data
 
-def updateDataframe(iteration, q):
+def updateDataframe(iteration, q, activate_animation=False):
     """
     Function designed to be simple and quick, to run every data-gather-period.
     Returns nothing.    
@@ -128,7 +128,9 @@ def updateDataframe(iteration, q):
     data = list(readout())
     df.loc[iteration] = data 
     # if animationConnSend.poll(0.1):
-    q.put(df.tail(600))
+    if activate_animation == True:
+        q.put(df.tail(600))
+
     print(data)
     # animationPlot.updataData(df)
     iteration += 1
