@@ -24,11 +24,13 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
         else:
             df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
+        start_timer = time.perf_counter()
+
         while iteration <= total_iterations:
             try:
                 timer = time.perf_counter()
                 
-                if timer >= timer_write:
+                if timer-start_timer >= timer_write:
                     t           = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                     sensor_data = rewrite_sensor.readout()
 
@@ -36,7 +38,7 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
                     timer_write += frequencySensor
 
                 if enable_arduino == True:
-                    if timer >= timer_arduino:
+                    if timer-start_timer >= timer_arduino:
                         arduino_data   = rewrite_arduino.readout()
                         timer_arduino += frequencyAruino
 
