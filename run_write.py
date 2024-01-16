@@ -18,6 +18,7 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
         iteration        = 0
         timer_write      = 0
         timer_arduino    = 0
+        timer_sensor     = 0
 
         if enable_arduino == True:
              df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP', 'Ard_P1', 'Ard_P2', 'Ard_P3', 'Ard_T1', 'Ard_T2', 'Ard_T3'])
@@ -30,26 +31,31 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
             try:
                 timer = time.perf_counter()
                 
-                if timer-start_timer >= timer_write:
-                    t           = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
+                if timer-start_timer >= timer_sensor:
+                    #t           = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                     sensor_data = rewrite_sensor.readout()
 
-                    iteration   += 1
-                    timer_write += frequencySensor
+                    #iteration   += 1
+                    timer_sensor += frequencySensor
                     
-                    df.loc[iteration] = data
-                    print(data)
 
                 if enable_arduino == True:
                     if timer-start_timer >= timer_arduino:
                         arduino_data   = rewrite_arduino.readout()
                         timer_arduino += frequencyAruino
-
+                
                 if enable_arduino == True:
                     data = list(t + sensor_data + arduino_data)
                 else:
                     data = list(t + sensor_data)
-
+                
+                
+                if timer - start_timer >= timer_write:
+                    t  = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
+                    iteration   += 1
+                    timer_write += 0.1
+                    df.loc[iteration] = data
+                    print(data)
                 
                 
                 
