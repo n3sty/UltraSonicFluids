@@ -13,16 +13,6 @@ import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-class Sensor2:
-    
-    def __init__(self, MF_LF, P_DP, T_CORI, MF_CORI, RHO_CORI):
-        self.MF_LF    = MF_LF
-        self.P_DP     = P_DP
-        self.T_CORI   = T_CORI
-        self.MF_CORI  = MF_CORI
-        self.RHO_CORI = RHO_CORI
-
-
 def initialize():
     """
     
