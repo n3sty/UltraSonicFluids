@@ -12,9 +12,15 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 import rewrite_sensor
 import rewrite_arduino
+import rewrite_syringe
 
 
-def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_arduino):
+def run_write(path, enable_arduino, enable_syringe):
+        frequencyWrite   = 0.1
+        frequencySensor  = 0.2
+        frequencyAruino  = 0.5
+        total_iterations = 100
+        
         iteration        = 0
         timer_write      = 0
         timer_arduino    = 0
@@ -54,20 +60,13 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
                 
                 if timer - start_timer >= timer_write:
                     iteration   += 1
-                    timer_write += 0.1
+                    timer_write += frequencyWrite
                     df.loc[iteration] = data
                     print(data)
                 
-                
-                
-            
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
                 df.to_csv(path + "/EXP_" + date + ".csv", index=False)
-                break
+                rewrite_syringe.stop(enable_syringe)
+                break #double break?
 
-            
-#    [Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3] = arduino.getData() # list with 6 values
-    
-    # Concatenating results into a single data variable
-#    data = (t, MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP, Pin_DP, Pout_DP, Ard_P1, Ard_T1, Ard_P2, Ard_T2, Ard_P3, Ard_T3)

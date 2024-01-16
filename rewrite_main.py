@@ -15,15 +15,17 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 import rewrite_sensor
 import rewrite_arduino
 import run_write
+import rewrite_syringe
 
 def rewrite_main(): 
+    """
+    
+    """
     # -----------------------------------------------------------------------------------------------------------
     # Pre defined variables
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
-    frequencySensor  = 0.2  
-    frequencyAruino  = 0.5    
-    total_iterations = 100                                               
+                                            
     path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
     enable_syringe   =  False
@@ -40,15 +42,16 @@ def rewrite_main():
 
     rewrite_sensor.initialize()
     rewrite_arduino.initialize()
-    #rewrite_syringe.initialize()
+    rewrite_syringe.initialize(enable_syringe)
     #rewrite_animation.initialize()
 
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
 
-    runwrite  = threading.Thread(target=run_write.run_write, args=(frequencySensor, frequencyAruino, total_iterations, path, enable_arduino))
+    rewrite_syringe.start(enable_syringe)
+    runwrite  = threading.Thread(target=run_write.run_write, args=(path, enable_arduino, enable_syringe))
 #   animation = 
-#   syringe =
+    
 
     runwrite.start()
 
