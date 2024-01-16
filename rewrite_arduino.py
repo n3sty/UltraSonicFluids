@@ -18,7 +18,16 @@ def initialize():
     """
     
     """
+    global arduino
+
     arduino = PressTemp()               # Arduino serial connection
     arduino.setup()                     # Initialises all Arduino sensors
 
     return 0 #nodig?
+
+def readout():
+    """
+    """
+    [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = arduino.getData()
+
+    return (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)

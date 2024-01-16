@@ -26,11 +26,14 @@ def rewrite_main():
     total_iterations = 100                                               
     path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
-    use_syringe = False
-    activate_animation = False
+    enable_syringe   =  False
+    enable_animation =  False
+    enable_arduino   =  False
 
-    print(f'use_syringe = {use_syringe}')
-    print(f'activate_animation = {activate_animation}')
+    print(f'use_syringe = {enable_syringe}')
+    print(f'activate_animation = {enable_animation}')
+    print(f'activate_arduino = {enable_arduino}')
+
 
     # -----------------------------------------------------------------------------------------------------------
     # Initilize the sensors / arduino / syringe / animation
@@ -43,7 +46,7 @@ def rewrite_main():
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
 
-    runwrite  = threading.Thread(target=run_write.run_write, args=(frequencySensor, frequencyAruino, total_iterations, path))
+    runwrite  = threading.Thread(target=run_write.run_write, args=(frequencySensor, frequencyAruino, total_iterations, path, enable_arduino))
 #   animation = 
 #   syringe =
 
