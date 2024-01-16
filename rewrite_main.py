@@ -21,8 +21,8 @@ def rewrite_main():
     # Pre defined variables
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
-    frequencySensor  = 0.1  
-    frequencyAruino  = 1    
+    frequencySensor  = 0.2  
+    frequencyAruino  = 0.5    
     total_iterations = 100                                               
     path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
