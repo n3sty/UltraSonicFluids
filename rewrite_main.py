@@ -28,7 +28,7 @@ def rewrite_main():
 
     enable_syringe   =  False
     enable_animation =  False
-    enable_arduino   =  False
+    enable_arduino   =  True
 
     print(f'use_syringe = {enable_syringe}')
     print(f'activate_animation = {enable_animation}')
