@@ -36,7 +36,7 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path):
 #                    arduino_data = rewrite_arduino.readout()
 #                    timer_arduino += frequencyAruino
 
-                data = t + sensor_data  #+ arduino_data
+                data = list(t + sensor_data)  #+ arduino_data)
                 df.loc[iteration] = data
                 
                 print(data)

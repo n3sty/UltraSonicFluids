@@ -38,5 +38,4 @@ def readout():
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
 
     return (MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
-    #return (MF_CORI, P_DP, T_CORI, MF_CORI, RHO_CORI)
         
