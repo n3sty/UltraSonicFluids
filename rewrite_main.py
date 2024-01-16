@@ -43,15 +43,15 @@ def rewrite_main():
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
 
-    #runwrite  = threading.Thread(target=run_write, args=(frequencySensor, frequencyAruino, total_iterations, path))
+    runwrite  = threading.Thread(target=run_write.run_write, args=(frequencySensor, frequencyAruino, total_iterations, path))
 #   animation = 
 #   syringe =
 
-    #runwrite.start()
+    runwrite.start()
 
-    #runwrite.join()
+    runwrite.join()
 
-    run_write.run_write(frequencySensor, frequencyAruino, total_iterations, path)
+    #run_write.run_write(frequencySensor, frequencyAruino, total_iterations, path)
 
 
     # -----------------------------------------------------------------------------------------------------------
