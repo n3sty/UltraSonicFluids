@@ -47,9 +47,9 @@ def rewrite_main():
 #   animation = 
 #   syringe =
 
-    run_write.start()
+    runwrite.start()
 
-    run_write.join()
+    runwrite.join()
 
 
     # -----------------------------------------------------------------------------------------------------------
