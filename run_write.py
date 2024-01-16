@@ -27,9 +27,11 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
 
         start_timer = time.perf_counter()
 
+
         while iteration <= total_iterations:
             try:
                 timer = time.perf_counter()
+                t     = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                 
                 if timer-start_timer >= timer_sensor:
                     #t           = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
@@ -51,7 +53,6 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
                 
                 
                 if timer - start_timer >= timer_write:
-                    t  = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                     iteration   += 1
                     timer_write += 0.1
                     df.loc[iteration] = data
