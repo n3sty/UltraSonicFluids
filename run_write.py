@@ -36,6 +36,9 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
 
                     iteration   += 1
                     timer_write += frequencySensor
+                    
+                    df.loc[iteration] = data
+                    print(data)
 
                 if enable_arduino == True:
                     if timer-start_timer >= timer_arduino:
@@ -47,9 +50,9 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path, enable_a
                 else:
                     data = list(t + sensor_data)
 
-                df.loc[iteration] = data
                 
-                print(data)
+                
+                
             
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
