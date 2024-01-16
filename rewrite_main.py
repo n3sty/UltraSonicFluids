@@ -1,5 +1,4 @@
 """
-
 """
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime                             
@@ -14,24 +13,18 @@ import animationplot
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 import rewrite_sensor
+import rewrite_arduino
+import run_write
 
-global dataFrequency, gatherTime
-
-def main():
-    """
-
-    """
-
+def rewrite_main(): 
     # -----------------------------------------------------------------------------------------------------------
-    # pre defined variables
-    
-    global iteration, gatherTime, dataFrequency, path
+    # Pre defined variables
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
-    dataFrequency = 10                                           # Number of data samples per second
-    iteration = 0                                                # Loop iteration starts at index 0
-    gatherTime = 3600                                              # Time (sec) of data gathering
-    path = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
+    frequencySensor  = 0.1  
+    frequencyAruino  = 0.5    
+    total_iterations = 100                                               
+    path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
     use_syringe = False
     activate_animation = False
@@ -40,21 +33,26 @@ def main():
     print(f'activate_animation = {activate_animation}')
 
     # -----------------------------------------------------------------------------------------------------------
-    # initilize the sensors / arduino / syringe / animation
-
-    df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
+    # Initilize the sensors / arduino / syringe / animation
 
     rewrite_sensor.initialize()
     rewrite_arduino.initialize()
-    
+    #rewrite_syringe.initialize()
+    #rewrite_animation.initialize()
+
+    # -----------------------------------------------------------------------------------------------------------
+    # Initialize threads
+
+    runwrite  = threading.Thread(target=run_write, args=(frequencySensor, frequencyAruino, total_iterations, path))
+#   animation = 
+#   syringe =
+
+    run_write.start()
+
+    run_write.join()
 
 
+    # -----------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    rewrite_main()

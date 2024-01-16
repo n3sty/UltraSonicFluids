@@ -13,6 +13,16 @@ import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+class Sensor2:
+    
+    def __init__(self, MF_LF, P_DP, T_CORI, MF_CORI, RHO_CORI):
+        self.MF_LF    = MF_LF
+        self.P_DP     = P_DP
+        self.T_CORI   = T_CORI
+        self.MF_CORI  = MF_CORI
+        self.RHO_CORI = RHO_CORI
+
+
 def initialize():
     """
     
@@ -29,32 +39,13 @@ def initialize():
     #misschien niet nodig?
     return 0
 
-def updateDataframe(iteration): #animation?
-    """
-    Function designed to be simple and quick, to run every data-gather-period.
-    Returns nothing.    
-    """    
-    #iteration = 0
-    
-    data = list(readout())
-    df.loc[iteration] = data 
-
-    print(data)
-    # animationPlot.updataData(df)
-    iteration += 1
-    
-    return 0
 
 def readout():
     """ 
-    Reads the data from the preformatted sensors
-    Returns a tuple of defined data variables 
     """
-
-    # Getting the time of the measurement
-    t = datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5]
-
     MF_LF                       = liquiflow.readSingle(205)
     P_DP                        = diffp.readSingle(205)
     [T_CORI, MF_CORI, RHO_CORI] = coriflow.readMultiple([142, 205, 270])
     
+    return (MF_CORI, P_DP, T_CORI, MF_CORI, RHO_CORI)
+        
