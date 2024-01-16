@@ -38,6 +38,8 @@ def run_write(frequencySensor, frequencyAruino, total_iterations, path):
 
                 data = t + sensor_data  #+ arduino_data
                 df.loc[iteration] = data
+                
+                print(data)
             
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
