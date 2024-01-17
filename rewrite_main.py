@@ -49,15 +49,15 @@ def rewrite_main():
     # Initialize threads
 
     rewrite_syringe.start(enable_syringe)
-    runwrite  = threading.Thread(target=run_write.run_write, args=(path, enable_arduino, enable_syringe))
+    #runwrite  = threading.Thread(target=run_write.run_write, args=(path, enable_arduino, enable_syringe))
 #   animation = 
     
 
-    runwrite.start()
+    #runwrite.start()
 
-    runwrite.join()
+    #runwrite.join()
 
-    #run_write.run_write(frequencySensor, frequencyAruino, total_iterations, path)
+    run_write.run_write(frequencySensor, frequencyAruino, total_iterations, path)
 
 
     # -----------------------------------------------------------------------------------------------------------
