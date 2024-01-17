@@ -57,7 +57,7 @@ def rewrite_main():
 
     #runwrite.join()
 
-    run_write.run_write(frequencySensor, frequencyAruino, total_iterations, path)
+    run_write.run_write(path, enable_arduino, enable_syringe)
 
 
     # -----------------------------------------------------------------------------------------------------------
