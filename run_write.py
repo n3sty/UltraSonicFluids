@@ -17,7 +17,7 @@ import rewrite_syringe
 
 def run_write(path, enable_arduino, enable_syringe):
         frequencyWrite   = 0.1
-        frequencySensor  = 0.2
+        frequencySensor  = 0.1
         frequencyAruino  = 0.5
         total_iterations = 100
         
