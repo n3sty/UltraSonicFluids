@@ -67,7 +67,6 @@ def run_write(path, enable_arduino, enable_syringe):
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
                 df.to_csv(path + "/EXP_" + date + ".csv", index=False)
-                print('lalalalalal')
-                print(f'{path} + "/EXP_" + {date} + ".csv')
+                print(f'Saving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
                 rewrite_syringe.stop(enable_syringe)
                 break #double break?
