@@ -29,7 +29,7 @@ def rewrite_main():
     path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
     enable_syringe   =  False
-    enable_animation =  True
+    enable_animation =  False
     enable_arduino   =  True
 
     print(f'use_syringe = {enable_syringe}')
