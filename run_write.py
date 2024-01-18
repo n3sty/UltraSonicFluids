@@ -40,7 +40,7 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
         while iteration <= total_iterations:
             try:
                 timer = time.perf_counter()
-                t     = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
+#                t     = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                 
                 if timer-start_timer >= timer_sensor:
                     sensor_data = rewrite_sensor.readout()
