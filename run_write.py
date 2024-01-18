@@ -15,7 +15,7 @@ import rewrite_arduino
 import rewrite_syringe
 
 
-def run_write(path, enable_arduino, enable_syringe):
+def run_write(path, animationQueue, enable_animation, enable_arduino, enable_syringe):
         frequencyWrite   = 0.1
         frequencySensor  = 0.1
         frequencyAruino  = 1
@@ -63,10 +63,13 @@ def run_write(path, enable_arduino, enable_syringe):
                     timer_write += frequencyWrite
                     df.loc[iteration] = data
                     print(data)
+
+                    if enable_animation == True:
+                        animationQueue.put(df.tail(600))
                 
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
                 df.to_csv(path + "/EXP_" + date + ".csv", index=False)
                 print(f'Saving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
                 rewrite_syringe.stop(enable_syringe)
-                break #double break?
+                break

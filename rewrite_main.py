@@ -29,7 +29,7 @@ def rewrite_main():
     path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
 
     enable_syringe   =  False
-    enable_animation =  False
+    enable_animation =  True
     enable_arduino   =  True
 
     print(f'use_syringe = {enable_syringe}')
@@ -48,6 +48,13 @@ def rewrite_main():
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
 
+
+    animationQueue = multiprocessing.Queue(maxsize=2)
+    animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
+    
+    if enable_animation == True:
+        animationJob.start()
+
     rewrite_syringe.start(enable_syringe)
     #runwrite  = threading.Thread(target=run_write.run_write, args=(path, enable_arduino, enable_syringe))
 #   animation = 
@@ -57,7 +64,7 @@ def rewrite_main():
 
     #runwrite.join()
 
-    run_write.run_write(path, enable_arduino, enable_syringe)
+    run_write.run_write(path, animationQueue, enable_animation, enable_arduino, enable_syringe)
 
 
     # -----------------------------------------------------------------------------------------------------------
