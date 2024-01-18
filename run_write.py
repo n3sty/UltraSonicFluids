@@ -19,7 +19,7 @@ def run_write(path, animationQueue, enable_animation, enable_arduino, enable_syr
         frequencyWrite   = 0.1
         frequencySensor  = 0.1
         frequencyAruino  = 1
-        total_iterations = 500
+        total_iterations = 100000
         
         iteration        = 0
         timer_write      = 0

@@ -42,7 +42,7 @@ def initialize(q):
     global dataTable, parameter, dataPoints, plotTitle, plotXLabel, plotYLabel, ax, line, queue
     queue = q
     
-    parameter = 'MF_CORI'
+    parameter = 'RHO_CORI'
     dataPoints = 600
     dataFrequency = 10 
 
