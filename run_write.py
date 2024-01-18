@@ -65,7 +65,7 @@ def run_write(path, animationQueue, enable_animation, enable_arduino, enable_syr
                     print(data)
 
                     if enable_animation == True:
-                        animationQueue.put(df.tail(1600))
+                        animationQueue.put(df.tail(100))
                 
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
