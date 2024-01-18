@@ -31,7 +31,7 @@ def rewrite_main():
     syringe_change_flow_rate   = 250
     syringe_change_timer       = 60
 
-    enable_syringe    =  False
+    enable_syringe    =  True
     enable_animation  =  False
     enable_arduino    =  True
 
