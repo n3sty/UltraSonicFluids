@@ -14,20 +14,24 @@ import numpy as np
 
 syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
 
-def initialize(enable_syringe):
+def initialize(enable_syringe, flow_rate):
     if enable_syringe == True:
         syringe.openConnection()
 
         # Voer waardes in
         syringe.setUnits('μL/min')
         syringe.setDiameter(4.5)
-        syringe.setVolume(1600)
-        syringe.setRate(100)
+        syringe.setVolume(900)
+        syringe.setRate(flow_rate)
 
         #   als je timer en delay wilt toevoegen
         #syringe.setTime(2)
         #syringe.setDelay(0)
     
+def change_flow(enable_syringe, flow_rate):
+    if enable_syringe == True:
+        syringe.setRate(flow_rate)
+
 
 def start(enable_syringe):
     if enable_syringe == True:

@@ -26,11 +26,14 @@ def rewrite_main():
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
                                             
-    path             = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
+    path                       = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
+    syringe_starting_flow_rate = 100
+    syringe_change_flow_rate   = 250
+    syringe_change_timer       = 60
 
-    enable_syringe   =  False
-    enable_animation =  False
-    enable_arduino   =  True
+    enable_syringe    =  False
+    enable_animation  =  False
+    enable_arduino    =  True
 
     print(f'use_syringe = {enable_syringe}')
     print(f'activate_animation = {enable_animation}')
@@ -42,7 +45,7 @@ def rewrite_main():
 
     rewrite_sensor.initialize()
     rewrite_arduino.initialize()
-    rewrite_syringe.initialize(enable_syringe)
+    rewrite_syringe.initialize(enable_syringe, syringe_starting_flow_rate)
     #rewrite_animation.initialize()
 
     # -----------------------------------------------------------------------------------------------------------
@@ -64,7 +67,7 @@ def rewrite_main():
 
     #runwrite.join()
 
-    run_write.run_write(path, animationQueue, enable_animation, enable_arduino, enable_syringe)
+    run_write.run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe)
 
 
     # -----------------------------------------------------------------------------------------------------------

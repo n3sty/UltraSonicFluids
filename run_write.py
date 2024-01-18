@@ -15,21 +15,24 @@ import rewrite_arduino
 import rewrite_syringe
 
 
-def run_write(path, animationQueue, enable_animation, enable_arduino, enable_syringe):
-        frequencyWrite   = 0.1
-        frequencySensor  = 0.1
-        frequencyAruino  = 1
-        total_iterations = 10000000
+def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe):
+        frequencyWrite        = 0.1
+        frequencySensor       = 0.1
+        frequencyAruino       = 1
+        total_iterations      = 10000000
         
         iteration        = 0
         timer_write      = 0
         timer_arduino    = 0
         timer_sensor     = 0
+        timer_syringe    = 0
+        S_FLOW           = syringe_starting_flow_rate
+
 
         if enable_arduino == True:
-             df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP', 'Ard_P1', 'Ard_P2', 'Ard_P3', 'Ard_T1', 'Ard_T2', 'Ard_T3'])
+            df = pd.DataFrame(columns=['time', 'S_FLOW','MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP', 'Ard_P1', 'Ard_P2', 'Ard_P3', 'Ard_T1', 'Ard_T2', 'Ard_T3'])
         else:
-            df = pd.DataFrame(columns=['time', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
+            df = pd.DataFrame(columns=['time', 'S_FLOW', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
         start_timer = time.perf_counter()
 
@@ -46,22 +49,32 @@ def run_write(path, animationQueue, enable_animation, enable_arduino, enable_syr
                     #iteration   += 1
                     timer_sensor += frequencySensor
                     
-
-                if enable_arduino == True:
-                    if timer-start_timer >= timer_arduino:
+                if timer-start_timer  >= timer_arduino:
+                    if enable_arduino == True:
                         arduino_data   = rewrite_arduino.readout()
-                        timer_arduino += frequencyAruino
+                        timer_arduino += frequencyAruino                        
+
                 
-                if enable_arduino == True:
-                    data = list(t + sensor_data + arduino_data)
-                else:
-                    data = list(t + sensor_data)
+                if timer - start_timer >= timer_syringe:
+                    rewrite_syringe.change_flow(enable_syringe, S_FLOW)
+                    S_FLOW             +=  syringe_change_flow_rate
+                    timer_syringe      +=  syringe_change_timer
+
+                # if enable_arduino == True:
+                #     data = list(t + sensor_data + arduino_data)
+                # else:
+                #     data = list(t + sensor_data)
                 
                 
                 if timer - start_timer >= timer_write:
-                    iteration   += 1
-                    timer_write += frequencyWrite
-                    df.loc[iteration] = data
+                    if enable_arduino == True:
+                        data = list(t + (S_FLOW,) + sensor_data + arduino_data)
+                    else:
+                        data = list(t + (S_FLOW,) + sensor_data)
+
+                    iteration         += 1
+                    timer_write       += frequencyWrite
+                    df.loc[iteration]  = data
                     print(data)
 
                     if enable_animation == True:
