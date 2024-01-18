@@ -31,8 +31,8 @@ def rewrite_main():
     syringe_change_flow_rate   = 250                                                   # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
     syringe_change_timer       = 60                                                    # 
 
-    enable_syringe    =  True
-    enable_animation  =  False
+    enable_syringe    =  False
+    enable_animation  =  True
     enable_arduino    =  True
 
     print(f'use_syringe = {enable_syringe}')

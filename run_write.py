@@ -60,9 +60,9 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
                 
                 if timer - start_timer >= timer_write:
                     if enable_arduino == True:
-                        data = list(timer + (S_FLOW,) + sensor_data + arduino_data)
+                        data = list((timer,) + (S_FLOW,) + sensor_data + arduino_data)
                     else:
-                        data = list(timer + (S_FLOW,) + sensor_data)
+                        data = list((timer,) + (S_FLOW,) + sensor_data)
 
                     iteration         += 1
                     timer_write       += frequencyWrite
