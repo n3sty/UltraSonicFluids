@@ -1,3 +1,8 @@
+"""
+Run write is the function that runs the code and writes the data to the csv file.
+"""
+
+
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime                             
 import time
