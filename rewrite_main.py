@@ -1,4 +1,5 @@
 """
+This is the main function. It will automaticaly run main when imported
 """
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime                             
@@ -19,22 +20,23 @@ import rewrite_syringe
 
 def rewrite_main(): 
     """
-    
+    The main function uses the functions from sensor, arduino run_write and syringe to get the data, then uses the animation plot to plot the data.
     """
     # -----------------------------------------------------------------------------------------------------------
     # Pre defined variables
 
     # Certain constants that influence the data gathering and the length/size of the measurement.
                                             
-    path                       = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry pi
+    path                       = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry Pi
     syringe_starting_flow_rate = 100                                                   # The flowrate at which the syringe starts flowing [ul/min]
-    syringe_change_flow_rate   = 50                                                   # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
-    syringe_change_timer       = 10                                                    # 
+    syringe_change_flow_rate   = 50                                                    # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
+    syringe_change_timer       = 10                                                    # The time 
 
-    enable_syringe    =  True
-    enable_animation  =  False
-    enable_arduino    =  True
+    enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
+    enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
+    enable_arduino    =  True                                                          # When True it enables the arduino and will print and store the data besides the sensor data
 
+    # Printing the predefined enabled variables
     print(f'use_syringe = {enable_syringe}')
     print(f'activate_animation = {enable_animation}')
     print(f'activate_arduino = {enable_arduino}')
@@ -50,14 +52,18 @@ def rewrite_main():
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
 
-
+    # Starts the animation in a different thread to maximize performance
     animationQueue = multiprocessing.Queue(maxsize=2)
     animationJob = multiprocessing.Process(target=animationplot.initialize, args=(animationQueue,))
     
     if enable_animation == True:
         animationJob.start()
 
+    # Starts the pumping of the syringe
     rewrite_syringe.start(enable_syringe)
+
+    # Starts the sensor and arduino, collects the data and puts it into a csv file
+
     #runwrite  = threading.Thread(target=run_write.run_write, args=(path, animationQueue, enable_animation, enable_arduino, enable_syringe))
 #   animation = 
     

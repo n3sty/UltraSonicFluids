@@ -1,5 +1,5 @@
 """
-
+This is the main function
 """
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime                             
