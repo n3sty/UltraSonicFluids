@@ -28,6 +28,22 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
         It will keep reading out the data from the sensors and arduino until it is stopped by an keyboard interuption (ctrl + c) or it will exceed the total amount of iterations.
 
         When enable animation is activated it will put the tail of the dataframe into another dataframe that is used to plot the data
+
+        
+        # Make the dataframe with the variables of      #TODO: eenheden
+        # time      :   time that has passes since the measurement started [t]
+        # S_FLOW    :   flowrate of the syringe  [μL/min] 
+        # MF_LF     :   massflow of the liquidflow sensor
+        # T_CORI    :   temperature of the coriolisflow sensor
+        # MF_CORI   :   massflow of the coriolisflow sensor
+        # RHO_CORI  :   density of the coriolisflow sensor
+        # P_DP      :   preasure of the differential preasure sensor
+        # Ard_P1    :   preasure on location 1 of the arduino
+        # Ard_P2    :   preasure on location 2 of the arduino
+        # Ard_P3    :   preasure on location 3 of the arduino
+        # Ard_T1    :   temperature on location 1 of the arduino
+        # Ard_T2    :   temperature on location 2 of the arduino
+        # Ard_T3    :   temperature on location 3 of the arduino
         """
 
         # Defining initial frequencies and iterations
@@ -48,22 +64,6 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
         # timer_syringe and S_FLOW (syringe flowrate) that can be iterated on
         timer_syringe    = syringe_change_timer
         S_FLOW           = syringe_starting_flow_rate
-
-        # Make the dataframe with the variables of      #TODO: eenheden
-        # time      :   time that has passes since the measurement started [t]
-        # S_FLOW    :   flowrate of the syringe  [μL/min] 
-        # MF_LF     :   massflow of the liquidflow sensor
-        # T_CORI    :   temperature of the coriolisflow sensor
-        # MF_CORI   :   massflow of the coriolisflow sensor
-        # RHO_CORI  :   density of the coriolisflow sensor
-        # P_DP      :   preasure of the differential preasure sensor
-        # Ard_P1    :   preasure on location 1 of the arduino
-        # Ard_P2    :   preasure on location 2 of the arduino
-        # Ard_P3    :   preasure on location 3 of the arduino
-        # Ard_T1    :   temperature on location 1 of the arduino
-        # Ard_T2    :   temperature on location 2 of the arduino
-        # Ard_T3    :   temperature on location 3 of the arduino
-
 
         # When enable_arduino is True the dataframe needs to include the data of the arduino
         if enable_arduino == True:
