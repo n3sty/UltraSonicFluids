@@ -53,10 +53,10 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
         # time      :   time that has passes since the measurement started [t]
         # S_FLOW    :   flowrate of the syringe  [μL/min] 
         # MF_LF     :   massflow of the liquidflow sensor
-        # T_CORI    :   temperature of the coriflow sensor
-        # MF_CORI   :   massflow of the coriflow sensor
-        # RHO_CORI  :   density of the coriflow sensor
-        # P_DP      :   
+        # T_CORI    :   temperature of the coriolisflow sensor
+        # MF_CORI   :   massflow of the coriolisflow sensor
+        # RHO_CORI  :   density of the coriolisflow sensor
+        # P_DP      :   preasure of the differential preasure sensor
         # Ard_P1    :   preasure on location 1 of the arduino
         # Ard_P2    :   preasure on location 2 of the arduino
         # Ard_P3    :   preasure on location 3 of the arduino
@@ -71,31 +71,44 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
         else:
             df = pd.DataFrame(columns=['time', 'S_FLOW', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
 
-        # will get the startingvalue of the timer
+        # Will get the startingvalue of the timer
         start_timer = time.perf_counter()
 
-        # it will loop until
+        # It will loop until the total amount of iterations is hit, or is stopped by a keyboard interupt
         while iteration <= total_iterations:
             try:
+                # Get current time
                 timer = time.perf_counter()
 #                t     = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                 
+                # When the amount of time that has passed is bigger than the timer of the sensor
+                # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
                 if timer-start_timer >= timer_sensor:
                     sensor_data = rewrite_sensor.readout()
                     timer_sensor += frequencySensor
-                    
+
+                # When the amount of time that has passed is bigger than the timer of the arduino
+                # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
                 if timer-start_timer  >= timer_arduino:
                     if enable_arduino == True:
                         arduino_data   = rewrite_arduino.readout()
                         timer_arduino += frequencyAruino                        
                 
+                # When the amount of time that has passed is bigger than the timer of the syringe
+                # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
                 if timer - start_timer >= timer_syringe:
                     S_FLOW             +=  syringe_change_flow_rate
                     rewrite_syringe.change_flow(enable_syringe, S_FLOW)
 
                     timer_syringe      +=  syringe_change_timer
  
-                
+                # When the amount of time that has passed is bigger than the timer of the write_timer
+                # The list of data will be adjusted
+                # The amount of iterations will be increased by 1
+                # The timer_write will be increased by its frequency
+                # The data will be added to the dataframe
+                # The data will be printed
+                # When enable_animation is true the last part of the dataframe will be plotted
                 if timer - start_timer >= timer_write:
                     if enable_arduino == True:
                         data = list((timer - start_timer,) + (S_FLOW,) + sensor_data + arduino_data)
@@ -109,7 +122,10 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
 
                     if enable_animation == True:
                         animationQueue.put(df.tail(100))
-                
+
+            # When there is a keyboard interupt (ctrl + c) the current date (month-day_hour minute) is saved as the variable date
+            # Then the dataframe is saved to a csv-file
+            # the syringe is stopped
             except KeyboardInterrupt:
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
                 df.to_csv(path + "/EXP_" + date + ".csv", index=False)
