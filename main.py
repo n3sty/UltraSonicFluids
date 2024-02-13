@@ -28,9 +28,9 @@ def main():
     # Certain constants that influence the data gathering and the length/size of the measurement.
                                             
     path                       = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry Pi
-    syringe_starting_flow_rate = 100                                                   # The flowrate at which the syringe starts flowing [ul/min]
+    syringe_starting_flow_rate = 50                                                   # The flowrate at which the syringe starts flowing [ul/min]
     syringe_change_flow_rate   = 50                                                    # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
-    syringe_change_timer       = 10                                                    # The time 
+    syringe_change_timer       = 4*60                                                  # The time 
 
     enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
     enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
