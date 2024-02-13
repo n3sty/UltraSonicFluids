@@ -5,8 +5,7 @@ import pandas as pd                         # Data is stored in a Pandas datafra
 import datetime                             
 import time
 from Sensor import Sensor
-from Arduino.arduino_readout import PressTemp
-import sensor_controler                     # plek waar alle oude code stond
+from Arduino.arduino_readout import PressTemp                    # plek waar alle oude code stond
 import warnings
 import threading
 import multiprocessing
@@ -21,7 +20,7 @@ import rewrite_syringe
 def rewrite_main(): 
     """
     The main function uses the functions from sensor, arduino run_write and syringe to get the data, then uses the animation plot to plot the data.
-    
+
     """
     # -----------------------------------------------------------------------------------------------------------
     # Pre defined variables

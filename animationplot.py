@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import sensor_controler
+import Begin_files.sensor_controler as sensor_controler
 from matplotlib.animation import FuncAnimation
 
 

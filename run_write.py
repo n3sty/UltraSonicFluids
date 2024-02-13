@@ -8,7 +8,7 @@ import datetime
 import time
 from Sensor import Sensor
 from Arduino.arduino_readout_simple import PressTemp
-import sensor_controler                     # plek waar alle oude code stond
+import Begin_files.sensor_controler as sensor_controler                     # plek waar alle oude code stond
 import warnings
 import threading
 import multiprocessing

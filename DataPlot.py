@@ -2,7 +2,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from main import dataFrequency, gatherTime
+from Begin_files.main import dataFrequency, gatherTime
 
 # Declaring global variables
 global df
