@@ -8,16 +8,16 @@ import datetime
 import time
 from Sensor import Sensor
 from Arduino.arduino_readout_simple import PressTemp
-import Begin_files.sensor_controler as sensor_controler                     # plek waar alle oude code stond
+import Begin_files.sensor_controler as sensor_controller                     # plek waar alle oude code stond
 import warnings
 import threading
 import multiprocessing
 import animationplot
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-import rewrite_sensor
-import rewrite_arduino
-import rewrite_syringe
+import sensor_controller
+import arduino_controller
+import syringe_controller
 
 
 def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe):
@@ -84,21 +84,21 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
                 # When the amount of time that has passed is bigger than the timer of the sensor
                 # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
                 if timer-start_timer >= timer_sensor:
-                    sensor_data = rewrite_sensor.readout()
+                    sensor_data = sensor_controller.readout()
                     timer_sensor += frequencySensor
 
                 # When the amount of time that has passed is bigger than the timer of the arduino
                 # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
                 if timer-start_timer  >= timer_arduino:
                     if enable_arduino == True:
-                        arduino_data   = rewrite_arduino.readout()
+                        arduino_data   = arduino_controller.readout()
                         timer_arduino += frequencyAruino                        
                 
                 # When the amount of time that has passed is bigger than the timer of the syringe
                 # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
                 if timer - start_timer >= timer_syringe:
                     S_FLOW             +=  syringe_change_flow_rate
-                    rewrite_syringe.change_flow(enable_syringe, S_FLOW)
+                    syringe_controller.change_flow(enable_syringe, S_FLOW)
 
                     timer_syringe      +=  syringe_change_timer
  
@@ -130,5 +130,5 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
                 date = datetime.datetime.now().strftime("%m-%d_%H%M")
                 df.to_csv(path + "/EXP_" + date + ".csv", index=False)
                 print(f'Saving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
-                rewrite_syringe.stop(enable_syringe)
+                syringe_controller.stop(enable_syringe)
                 break

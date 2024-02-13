@@ -12,12 +12,12 @@ import multiprocessing
 import animationplot
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-import rewrite_sensor
-import rewrite_arduino
+import sensor_controller
+import arduino_controller
+import syringe_controller
 import run_write
-import rewrite_syringe
 
-def rewrite_main(): 
+def main(): 
     """
     The main function uses the functions from sensor, arduino run_write and syringe to get the data, then uses the animation plot to plot the data.
 
@@ -45,9 +45,9 @@ def rewrite_main():
     # -----------------------------------------------------------------------------------------------------------
     # Initilize the sensors / arduino / syringe / animation
 
-    rewrite_sensor.initialize()
-    rewrite_arduino.initialize()
-    rewrite_syringe.initialize(enable_syringe, syringe_starting_flow_rate)
+    sensor_controller.initialize()
+    arduino_controller.initialize()
+    syringe_controller.initialize(enable_syringe, syringe_starting_flow_rate)
 
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
@@ -60,7 +60,7 @@ def rewrite_main():
         animationJob.start()
 
     # Starts the pumping of the syringe
-    rewrite_syringe.start(enable_syringe)
+    syringe_controller.start(enable_syringe)
 
     # Starts the sensor and arduino, collects the data and puts it into a csv file
 
@@ -78,4 +78,4 @@ def rewrite_main():
     # -----------------------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    rewrite_main()
+    main()
