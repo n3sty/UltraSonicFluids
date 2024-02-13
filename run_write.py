@@ -47,8 +47,8 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
 
         # Defining initial frequencies and iterations
         # Make sure that frequencyWrite is bigger than frequencySensor and frequencyArduino, else the extra data will not be used
-        frequencyWrite        = 0.02         # [Hz]
-        frequencySensor       = 0.02         # [Hz]
+        frequencyWrite        = 0.1         # [Hz]
+        frequencySensor       = 0.1         # [Hz]
         frequencyAruino       = 1           # [Hz]
         total_iterations      = 10000000    # total amount of iterations
         
