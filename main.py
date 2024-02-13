@@ -47,7 +47,10 @@ def main():
 
     sensor_controller.initialize()
     arduino_controller.initialize()
-    syringe_controller.initialize(enable_syringe, syringe_starting_flow_rate)
+
+    syringe = syringe_controller.SyringePump()
+    syringe.enable = enable_syringe
+    syringe.initialize(syringe_starting_flow_rate)
 
     # -----------------------------------------------------------------------------------------------------------
     # Initialize threads
@@ -60,9 +63,9 @@ def main():
         animationJob.start()
 
     # Starts the pumping of the syringe
-    syringe_controller.start(enable_syringe)
+    syringe.start(enable_syringe)
 
-    run_write.run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe)
+    run_write.run_write(syringe, path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe)
 
 
     # -----------------------------------------------------------------------------------------------------------

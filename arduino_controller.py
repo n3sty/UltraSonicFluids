@@ -27,7 +27,7 @@ def initialize():
     arduino = PressTemp()               # Arduino serial connection
     arduino.setup()                     # Initialises all Arduino sensors
 
-    return 0 #nodig?
+    return 0
 
 def readout():
     """

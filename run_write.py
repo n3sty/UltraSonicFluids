@@ -19,7 +19,7 @@ import arduino_controller
 import syringe_controller
 
 
-def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe):
+def run_write(syringe, path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe):
         """
         run_write will readout the sensors and arduino and safes the data into a list called; data.
         This data will then be stored into a dataframe called; df.
@@ -96,7 +96,7 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
                 # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
                 if timer - start_timer >= timer_syringe:
                     S_FLOW             +=  syringe_change_flow_rate
-                    syringe_controller.change_flow(enable_syringe, S_FLOW)
+                    syringe.change_flow(S_FLOW)
 
                     timer_syringe      +=  syringe_change_timer
  
