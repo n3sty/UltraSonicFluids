@@ -62,16 +62,6 @@ def main():
     # Starts the pumping of the syringe
     syringe_controller.start(enable_syringe)
 
-    # Starts the sensor and arduino, collects the data and puts it into a csv file
-
-    #runwrite  = threading.Thread(target=run_write.run_write, args=(path, animationQueue, enable_animation, enable_arduino, enable_syringe))
-#   animation = 
-    
-
-    #runwrite.start()
-
-    #runwrite.join()
-
     run_write.run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe)
 
 

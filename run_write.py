@@ -79,7 +79,6 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
             try:
                 # Get current time
                 timer = time.perf_counter()
-#                t     = (datetime.datetime.now().strftime("%H:%M:%S.%f")[:-5],)
                 
                 # When the amount of time that has passed is bigger than the timer of the sensor
                 # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
