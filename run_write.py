@@ -2,7 +2,6 @@
 Run write is the function that runs the code and writes the data to the csv file.
 """
 
-
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime                             
 import time
@@ -48,8 +47,8 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
 
         # Defining initial frequencies and iterations
         # Make sure that frequencyWrite is bigger than frequencySensor and frequencyArduino, else the extra data will not be used
-        frequencyWrite        = 0.1         # [Hz]
-        frequencySensor       = 0.1         # [Hz]
+        frequencyWrite        = 0.02         # [Hz]
+        frequencySensor       = 0.02         # [Hz]
         frequencyAruino       = 1           # [Hz]
         total_iterations      = 10000000    # total amount of iterations
         
