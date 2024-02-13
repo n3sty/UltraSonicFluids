@@ -21,6 +21,7 @@ import rewrite_syringe
 def rewrite_main(): 
     """
     The main function uses the functions from sensor, arduino run_write and syringe to get the data, then uses the animation plot to plot the data.
+    
     """
     # -----------------------------------------------------------------------------------------------------------
     # Pre defined variables
