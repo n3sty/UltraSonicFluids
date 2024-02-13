@@ -91,8 +91,7 @@ def run_write(path, animationQueue, syringe_change_timer, syringe_change_flow_ra
                 # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
                 if timer-start_timer  >= timer_arduino:
                     if enable_arduino == True:
-                        arduino_data   = threading.Thread(target=arduino_controller.readout())
-                        arduino_data.start()
+                        arduino_data   = arduino_controller.readout()
                         timer_arduino += frequencyAruino                        
                 
                 # When the amount of time that has passed is bigger than the timer of the syringe
