@@ -32,7 +32,7 @@ def main():
     syringe_change_flow_rate   = 50                                                    # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
     syringe_change_timer       = 4*60                                                  # The time for each step in flowrate
 
-    enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
+    enable_syringe    =  False                                                          # When True it enables the syringe in its defined initial conditions
     enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
     enable_arduino    =  True                                                          # When True it enables the arduino and will print and store the data besides the sensor data
 
