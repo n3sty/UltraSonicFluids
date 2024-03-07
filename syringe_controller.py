@@ -21,7 +21,7 @@ import numpy as np
 # x         : 0            (so nothing special activated)
 # mode      : 0            (so nothing special activated)
 # verbose   : False        (nothing is printed)
-syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
+#################syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
 
 # def initialize(enable_syringe, flow_rate):
 #     """
@@ -72,6 +72,7 @@ class SyringePump:
     def __init__(self):
         self.syringe = None
         self.enable = None
+        self.syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
 
     def initialize(self, flow_rate):
         """
