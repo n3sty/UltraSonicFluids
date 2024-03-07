@@ -1,6 +1,7 @@
 """
 Run write is the function that runs the code and writes the data to the csv file.
 """
+#test text
 
 import pandas as pd                         # Data is stored in a Pandas dataframe
 import datetime                             
