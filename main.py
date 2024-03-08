@@ -125,6 +125,10 @@ def main():
     # Will get the startingvalue of the timer
     start_timer = time.perf_counter()
 
+    arduino_control.readout(0)
+    sensor_control.readout(0)
+    syringe.change_flow(0)
+
     # It will loop until the total amount of iterations is hit, or is stopped by a keyboard interupt
     while iteration <= total_iterations:
         try:
@@ -132,8 +136,6 @@ def main():
             # Get current time
             timer = time.perf_counter()
             
-            arduino_control.readout(timer-start_timer)
-
             t1 = threading.Thread(target=sensor_control.readout, args=(timer-start_timer,))
             t2 = threading.Thread(target=arduino_control.readout, args=(timer-start_timer,))
             t3 = threading.Thread(target=syringe.change_flow, args=(timer-start_timer,))
