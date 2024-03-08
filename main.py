@@ -64,8 +64,8 @@ def main():
 
     # Starts the pumping of the syringe
     syringe.start()
+
     
-    #def run_write(syringe, path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe):
     """
     run_write will readout the sensors and arduino and safes the data into a list called; data.
     This data will then be stored into a dataframe called; df.
@@ -175,8 +175,8 @@ def main():
             date = datetime.datetime.now().strftime("%m-%d_%H%M")
             df.to_csv(path + "/EXP_" + date + ".csv", index=False)
             print(f'Saving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
-            syringe_controller.stop(enable_syringe)
             break
+    syringe.stop()
 
     #run_write.run_write(syringe, path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe)
 
