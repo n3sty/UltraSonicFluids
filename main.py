@@ -189,7 +189,8 @@ def main():
                 iteration         += 1
                 timer_write       += frequencyWrite
                 df.loc[iteration]  = data
-                print(data)
+                
+                print(["{0:0.2f}".format(i) for i in data])
 
                 if enable_animation == True:
                     animationQueue.put(df.tail(100))
