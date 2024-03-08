@@ -132,7 +132,6 @@ def main():
     # It will loop until the total amount of iterations is hit, or is stopped by a keyboard interupt
     while iteration <= total_iterations:
         try:
-            time.sleep(0.05)
             # Get current time
             timer = time.perf_counter()
 
