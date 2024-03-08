@@ -45,8 +45,11 @@ def main():
     # -----------------------------------------------------------------------------------------------------------
     # Initilize the sensors / arduino / syringe / animation
 
-    sensor_controller.initialize()
+    #sensor_controller.initialize()
     arduino_controller.initialize()
+
+    sensor_control = sensor_controller.BH_sensors()
+    sensor_control.initialize()
 
     syringe = syringe_controller.SyringePump()
     syringe.enable = enable_syringe
@@ -128,7 +131,7 @@ def main():
             # When the amount of time that has passed is bigger than the timer of the sensor
             # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
             if timer-start_timer >= timer_sensor:
-                sensor_data = sensor_controller.readout()
+                sensor_data = sensor_control.readout()
                 timer_sensor += frequencySensor
 
             # When the amount of time that has passed is bigger than the timer of the arduino
@@ -176,10 +179,8 @@ def main():
             df.to_csv(path + "/EXP_" + date + ".csv", index=False)
             print(f'\nSaving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
             break
+    
     syringe.stop()
-
-    #run_write.run_write(syringe, path, animationQueue, syringe_change_timer, syringe_change_flow_rate, syringe_starting_flow_rate, enable_animation, enable_arduino, enable_syringe)
-
 
     # -----------------------------------------------------------------------------------------------------------
 

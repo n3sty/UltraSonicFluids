@@ -48,5 +48,3 @@ class Sensor:
         """
 
         self.instrument.wink(time)
-
-        return 0
