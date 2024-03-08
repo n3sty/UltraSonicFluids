@@ -39,7 +39,7 @@ def main():
     # Printing the predefined enabled variables
     print(f'use_syringe = {enable_syringe}')
     print(f'activate_animation = {enable_animation}')
-    print(f'activate_arduino = {enable_arduino}')
+    print(f'activate_arduino = {enable_arduino}\n')
 
 
     # -----------------------------------------------------------------------------------------------------------

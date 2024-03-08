@@ -108,7 +108,7 @@ class SyringePump:
         start will start the pumping process of the syringe
         """
         if self.enable:
-            print("starting the syringe pump")
+            print("starting the syringe pump \n")
             self.syringe.startPump()
 
     def stop(self):
@@ -116,5 +116,5 @@ class SyringePump:
         stop will stop the pumping process of the syringe
         """
         if self.enable:
-            print("stopping the syringe pump")
+            print("stopping the syringe pump \n")
             self.syringe.stopPump()
