@@ -135,16 +135,16 @@ def main():
             time.sleep(0.05)
             # Get current time
             timer = time.perf_counter()
-            
-            t1 = threading.Thread(target=sensor_control.readout, args=(timer-start_timer,))
-            t2 = threading.Thread(target=arduino_control.readout, args=(timer-start_timer,))
-            t3 = threading.Thread(target=syringe.change_flow, args=(timer-start_timer,))
 
-            t1.start()
-            t2.start()
-            t3.start()
-
-
+            if timer-start_timer >= sensor_control.timer:
+                t1 = threading.Thread(target=sensor_control.readout, args=(timer-start_timer,))
+                t1.start()
+            if timer-start_timer >= arduino_control.timer:    
+                t2 = threading.Thread(target=arduino_control.readout, args=(timer-start_timer,))
+                t2.start()
+            if timer-start_timer >= syringe.timer:    
+                t3 = threading.Thread(target =syringe.change_flow, args=(timer-start_timer,))
+                t3.start()
 
             # When the amount of time that has passed is bigger than the timer of the sensor
             # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
