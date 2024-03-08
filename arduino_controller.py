@@ -18,9 +18,13 @@ import numpy as np
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 class Arduino_setup:
-    def __init__(self):
+    def __init__(self, frequency):
         self.arduino = None
         self.enable = None
+
+        self.last_data = None
+        self.timer = 0
+        self.frequency =frequency
 
     def initialize(self):
         """
@@ -30,7 +34,7 @@ class Arduino_setup:
             self.arduino = PressTemp()               # Arduino serial connection
             self.arduino.setup()                     # Initialises all Arduino sensors
 
-    def readout(self):
+    def readout(self, run_time):
         """
         readout will get te data from the arduino and puts it into a tuple to be used in run_write
 
@@ -43,5 +47,10 @@ class Arduino_setup:
         Ard_T3 : The temperature measured by the arduino on location 3
         """
         if self.enable:
-            [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
-            return (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
+            if run_time >= self.frequency:
+                [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
+                self.last_data = (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
+                
+                self.timer += self.frequency
+                
+            return self.last_data

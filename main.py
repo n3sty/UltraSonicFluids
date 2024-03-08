@@ -45,10 +45,11 @@ def main():
     # Initilize the sensors / arduino / syringe / animation
 
     frequencySensor       = 0.1         # [Hz]
+    frequencyAruino       = 1           # [Hz]
 
 
   
-    arduino_control= arduino_controller.Arduino_setup()
+    arduino_control= arduino_controller.Arduino_setup(frequencyAruino)
     arduino_control.enable = enable_arduino
     arduino_control.initialize()
     
@@ -102,15 +103,13 @@ def main():
     # Make sure that frequencyWrite is bigger than frequencySensor and frequencyArduino, else the extra data will not be used
     frequencyWrite        = 0.1         # [Hz]
   
-    frequencyAruino       = 1           # [Hz]
+    #frequencyAruino       = 1           # [Hz]
     total_iterations      = 10000000    # total amount of iterations
     
 
     # Defining some variables that will be iterated on
     iteration        = 0
     timer_write      = 0
-    timer_arduino    = 0
-    #timer_sensor     = 0
 
     # Using the initial syringe_change_timer and syringe_starting_flow_rate to get the initial value of the
     # timer_syringe and S_FLOW (syringe flowrate) that can be iterated on
@@ -136,13 +135,12 @@ def main():
             # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
 
             sensor_data = sensor_control.readout(timer-start_timer)
-            #timer_sensor += frequencySensor
 
             # When the amount of time that has passed is bigger than the timer of the arduino
             # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
-            if timer-start_timer  >= timer_arduino:
-                arduino_data   = arduino_control.readout()
-                timer_arduino += frequencyAruino                        
+            #if timer-start_timer  >= timer_arduino:
+            
+            arduino_data   = arduino_control.readout(timer-start_timer)                      
             
             # When the amount of time that has passed is bigger than the timer of the syringe
             # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
