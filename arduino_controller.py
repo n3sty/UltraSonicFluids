@@ -48,6 +48,7 @@ class Arduino_setup:
         """
         if self.enable:
             if run_time >= self.timer:
+                self.timer += self.frequency
                 [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
                 self.last_data = (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
                 

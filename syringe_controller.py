@@ -64,10 +64,11 @@ class SyringePump:
         """
         if self.enable:
             if run_time >= self.timer:
+                self.timer += self.frequency
                 self.S_flow += self.change_flow_rate
                 self.syringe.setRate(self.S_flow)
 
-                self.timer += self.frequency
+                
         return self.S_flow
 
     def start(self):

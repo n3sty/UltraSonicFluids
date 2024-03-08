@@ -59,12 +59,13 @@ class BH_sensors:
         RHO_CORI: Density of the coriflow
         """
         if run_time >= self.timer:
+            self.timer += self.frequency
             MF_LF                       = self.liquiflow.readSingle(205)
             P_DP                        = self.diffp.readSingle(205)
             [T_CORI, MF_CORI, RHO_CORI] = self.coriflow.readMultiple([142, 205, 270])
             self.last_data = (MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
             
-            self.timer += self.frequency
+            
 
         return self.last_data
         
