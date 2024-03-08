@@ -25,7 +25,7 @@ class BH_sensors:
         self.diffp = None
         self.coriflow = None
 
-        self.last_data = None
+        self.last_data = (0, 0, 0, 0 ,0)
         self.timer = 0
         self.frequency = frequency
 
