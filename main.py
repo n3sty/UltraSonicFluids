@@ -131,16 +131,26 @@ def main():
             # Get current time
             timer = time.perf_counter()
             
+            t1 = threading.Thread(target=sensor_control.readout(timer-start_timer))
+            t2 = threading.Thread(target=arduino_control.readout(timer-start_timer))
+            t3 = threading.Thread(target=syringe.change_flow(timer-start_timer))
+
+            t1.start()
+            t2.start()
+            t3.start()
+
+
+
             # When the amount of time that has passed is bigger than the timer of the sensor
             # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
 
-            sensor_data = sensor_control.readout(timer-start_timer)
+            #sensor_data = sensor_control.readout(timer-start_timer)
 
             # When the amount of time that has passed is bigger than the timer of the arduino
             # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
             #if timer-start_timer  >= timer_arduino:
             
-            arduino_data   = arduino_control.readout(timer-start_timer)                      
+            #arduino_data   = arduino_control.readout(timer-start_timer)                      
             
             # When the amount of time that has passed is bigger than the timer of the syringe
             # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
@@ -150,7 +160,7 @@ def main():
 
             #     timer_syringe      +=  syringe_change_timer
 
-            S_FLOW = syringe.change_flow(timer-start_timer)
+            #S_FLOW = syringe.change_flow(timer-start_timer)
 
             # When the amount of time that has passed is bigger than the timer of the write_timer
             # The list of data will be adjusted
@@ -159,11 +169,18 @@ def main():
             # The data will be added to the dataframe
             # The data will be printed
             # When enable_animation is true the last part of the dataframe will be plotted
+
+            # if timer - start_timer >= timer_write:
+            #     if enable_arduino == True:
+            #         data = list((timer - start_timer,) + (S_FLOW,) + sensor_data + arduino_data)
+            #     else:
+            #         data = list((timer - start_timer,) + (S_FLOW,) + sensor_data)
+
             if timer - start_timer >= timer_write:
                 if enable_arduino == True:
-                    data = list((timer - start_timer,) + (S_FLOW,) + sensor_data + arduino_data)
+                    data = list((timer - start_timer,) + (S_FLOW,) + sensor_control.last_data + arduino_control.last_data)
                 else:
-                    data = list((timer - start_timer,) + (S_FLOW,) + sensor_data)
+                    data = list((timer - start_timer,) + (S_FLOW,) + sensor_control.last_data)
 
 
                 iteration         += 1
