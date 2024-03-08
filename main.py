@@ -29,7 +29,7 @@ def main():
     path                       = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry Pi
     syringe_starting_flow_rate = 100                                                   # The flowrate at which the syringe starts flowing [ul/min]
     syringe_change_flow_rate   = 50                                                    # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
-    syringe_change_timer       = 1                                                    # The time 
+    syringe_change_timer       = 10                                                    # The time 
 
     enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
     enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
@@ -113,7 +113,7 @@ def main():
 
     # Using the initial syringe_change_timer and syringe_starting_flow_rate to get the initial value of the
     # timer_syringe and S_FLOW (syringe flowrate) that can be iterated on
-    timer_syringe    = syringe_change_timer
+    #timer_syringe    = syringe_change_timer
     S_FLOW           = syringe_starting_flow_rate
 
     # When enable_arduino is True the dataframe needs to include the data of the arduino
