@@ -22,7 +22,7 @@ class Arduino_setup:
         self.arduino = None
         self.enable = None
 
-        self.last_data = None
+        self.last_data = (0, 0, 0, 0, 0, 0)
         self.timer = 0
         self.frequency =frequency
 
@@ -52,5 +52,5 @@ class Arduino_setup:
                 self.last_data = (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
                 
                 self.timer += self.frequency
-                
+
             return self.last_data
