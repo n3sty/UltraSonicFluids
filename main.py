@@ -57,7 +57,7 @@ def main():
     sensor_control = sensor_controller.BH_sensors(frequencySensor)
     sensor_control.initialize()
 
-    syringe = syringe_controller.SyringePump()
+    syringe = syringe_controller.SyringePump(syringe_change_flow_rate, syringe_change_timer)
     syringe.enable = enable_syringe
     syringe.initialize(syringe_starting_flow_rate)
 
@@ -144,11 +144,13 @@ def main():
             
             # When the amount of time that has passed is bigger than the timer of the syringe
             # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
-            if timer - start_timer >= timer_syringe:
-                S_FLOW             +=  syringe_change_flow_rate
-                syringe.change_flow(S_FLOW)
+            # if timer - start_timer >= timer_syringe:
+            #     S_FLOW             +=  syringe_change_flow_rate
+            #     syringe.change_flow(S_FLOW)
 
-                timer_syringe      +=  syringe_change_timer
+            #     timer_syringe      +=  syringe_change_timer
+
+            S_FLOW = syringe.change_flow(timer-start_timer)
 
             # When the amount of time that has passed is bigger than the timer of the write_timer
             # The list of data will be adjusted
