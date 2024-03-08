@@ -24,7 +24,7 @@ class Arduino_setup:
 
         self.last_data = (0, 0, 0, 0, 0, 0)
         self.timer = 0
-        self.frequency =frequency
+        self.frequency = frequency
 
     def initialize(self):
         """

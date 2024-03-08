@@ -131,6 +131,8 @@ def main():
             # Get current time
             timer = time.perf_counter()
             
+            arduino_control.readout(timer-start_timer)
+
             t1 = threading.Thread(target=sensor_control.readout, args=(timer-start_timer,))
             t2 = threading.Thread(target=arduino_control.readout, args=(timer-start_timer,))
             t3 = threading.Thread(target=syringe.change_flow, args=(timer-start_timer,))
