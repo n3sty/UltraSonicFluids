@@ -20,13 +20,15 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 class Arduino_setup:
     def __init__(self):
         self.arduino = None
+        self.enable = None
 
     def initialize(self):
         """
         initialize will initilizes the arduino by making a object arduino
         """
-        self.arduino = PressTemp()               # Arduino serial connection
-        self.arduino.setup()                     # Initialises all Arduino sensors
+        if self.enable:
+            self.arduino = PressTemp()               # Arduino serial connection
+            self.arduino.setup()                     # Initialises all Arduino sensors
 
     def readout(self):
         """
@@ -40,6 +42,6 @@ class Arduino_setup:
         Ard_T2 : The temperature measured by the arduino on location 2
         Ard_T3 : The temperature measured by the arduino on location 3
         """
-        [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
-
-        return (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
+        if self.enable:
+            [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
+            return (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)

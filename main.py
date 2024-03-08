@@ -46,7 +46,9 @@ def main():
 
     #sensor_controller.initialize()
     arduino_control= arduino_controller.Arduino_setup()
+    arduino_control.enable = enable_arduino
     arduino_control.initialize()
+    
 
     sensor_control = sensor_controller.BH_sensors()
     sensor_control.initialize()
@@ -113,7 +115,7 @@ def main():
     S_FLOW           = syringe_starting_flow_rate
 
     # When enable_arduino is True the dataframe needs to include the data of the arduino
-    if enable_arduino == True:
+    if enable_arduino:
         df = pd.DataFrame(columns=['time', 'S_FLOW','MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP', 'Ard_P1', 'Ard_P2', 'Ard_P3', 'Ard_T1', 'Ard_T2', 'Ard_T3'])
     else:
         df = pd.DataFrame(columns=['time', 'S_FLOW', 'MF_LF', 'T_CORI', 'MF_CORI', 'RHO_CORI', 'P_DP'])
@@ -136,9 +138,8 @@ def main():
             # When the amount of time that has passed is bigger than the timer of the arduino
             # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
             if timer-start_timer  >= timer_arduino:
-                if enable_arduino == True:
-                    arduino_data   = arduino_control.readout()
-                    timer_arduino += frequencyAruino                        
+                arduino_data   = arduino_control.readout()
+                timer_arduino += frequencyAruino                        
             
             # When the amount of time that has passed is bigger than the timer of the syringe
             # The syringe will change its flowrate and the timer of the syringe will be increased with the syringe_change_timer
