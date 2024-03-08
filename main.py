@@ -174,7 +174,7 @@ def main():
         except KeyboardInterrupt:
             date = datetime.datetime.now().strftime("%m-%d_%H%M")
             df.to_csv(path + "/EXP_" + date + ".csv", index=False)
-            print(f'Saving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
+            print(f'\nSaving the dataframe to: {path} + "/EXP_" + {date} + ".csv')
             break
     syringe.stop()
 
