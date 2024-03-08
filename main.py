@@ -20,7 +20,6 @@ import syringe_controller
 def main(): 
     """
     The main function uses the functions from sensor, arduino run_write and syringe to get the data, then uses the animation plot to plot the data.
-
     """
     # -----------------------------------------------------------------------------------------------------------
     # Pre defined variables
@@ -46,7 +45,8 @@ def main():
     # Initilize the sensors / arduino / syringe / animation
 
     #sensor_controller.initialize()
-    arduino_controller.initialize()
+    arduino_control= arduino_controller.Arduino_setup()
+    arduino_control.initialize()
 
     sensor_control = sensor_controller.BH_sensors()
     sensor_control.initialize()
@@ -68,7 +68,6 @@ def main():
     # Starts the pumping of the syringe
     syringe.start()
 
-    
     """
     run_write will readout the sensors and arduino and safes the data into a list called; data.
     This data will then be stored into a dataframe called; df.
@@ -138,7 +137,7 @@ def main():
             # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  
             if timer-start_timer  >= timer_arduino:
                 if enable_arduino == True:
-                    arduino_data   = arduino_controller.readout()
+                    arduino_data   = arduino_control.readout()
                     timer_arduino += frequencyAruino                        
             
             # When the amount of time that has passed is bigger than the timer of the syringe

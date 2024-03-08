@@ -17,30 +17,29 @@ import numpy as np
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+class Arduino_setup:
+    def __init__(self):
+        self.arduino = None
 
-def initialize():
-    """
-    initialize will initilizes the arduino by making a object arduino
-    """
-    global arduino
+    def initialize(self):
+        """
+        initialize will initilizes the arduino by making a object arduino
+        """
+        self.arduino = PressTemp()               # Arduino serial connection
+        self.arduino.setup()                     # Initialises all Arduino sensors
 
-    arduino = PressTemp()               # Arduino serial connection
-    arduino.setup()                     # Initialises all Arduino sensors
+    def readout(self):
+        """
+        readout will get te data from the arduino and puts it into a tuple to be used in run_write
 
-    return 0
+        Variables       #TODO: eenheden
+        Ard_P1 : The preasure measured by the arduino on location 1
+        Ard_P2 : The preasure measured by the arduino on location 2
+        Ard_P3 : The preasure measured by the arduino on location 3
+        Ard_T1 : The temperature measured by the arduino on location 1
+        Ard_T2 : The temperature measured by the arduino on location 2
+        Ard_T3 : The temperature measured by the arduino on location 3
+        """
+        [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
 
-def readout():
-    """
-    readout will get te data from the arduino and puts it into a tuple to be used in run_write
-
-    Variables       #TODO: eenheden
-    Ard_P1 : The preasure measured by the arduino on location 1
-    Ard_P2 : The preasure measured by the arduino on location 2
-    Ard_P3 : The preasure measured by the arduino on location 3
-    Ard_T1 : The temperature measured by the arduino on location 1
-    Ard_T2 : The temperature measured by the arduino on location 2
-    Ard_T3 : The temperature measured by the arduino on location 3
-    """
-    [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = arduino.getData()
-
-    return (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
+        return (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
