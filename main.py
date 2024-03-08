@@ -33,7 +33,7 @@ def main():
 
     enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
     enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
-    enable_arduino    =  False                                                          # When True it enables the arduino and will print and store the data besides the sensor data
+    enable_arduino    =  True                                                          # When True it enables the arduino and will print and store the data besides the sensor data
 
     # Printing the predefined enabled variables
     print(f'use_syringe = {enable_syringe}')
@@ -44,13 +44,16 @@ def main():
     # -----------------------------------------------------------------------------------------------------------
     # Initilize the sensors / arduino / syringe / animation
 
-    #sensor_controller.initialize()
+    frequencySensor       = 0.1         # [Hz]
+
+
+  
     arduino_control= arduino_controller.Arduino_setup()
     arduino_control.enable = enable_arduino
     arduino_control.initialize()
     
 
-    sensor_control = sensor_controller.BH_sensors()
+    sensor_control = sensor_controller.BH_sensors(frequencySensor)
     sensor_control.initialize()
 
     syringe = syringe_controller.SyringePump()
@@ -98,7 +101,7 @@ def main():
     # Defining initial frequencies and iterations
     # Make sure that frequencyWrite is bigger than frequencySensor and frequencyArduino, else the extra data will not be used
     frequencyWrite        = 0.1         # [Hz]
-    frequencySensor       = 0.1         # [Hz]
+  
     frequencyAruino       = 1           # [Hz]
     total_iterations      = 10000000    # total amount of iterations
     
@@ -107,7 +110,7 @@ def main():
     iteration        = 0
     timer_write      = 0
     timer_arduino    = 0
-    timer_sensor     = 0
+    #timer_sensor     = 0
 
     # Using the initial syringe_change_timer and syringe_starting_flow_rate to get the initial value of the
     # timer_syringe and S_FLOW (syringe flowrate) that can be iterated on
@@ -131,9 +134,9 @@ def main():
             
             # When the amount of time that has passed is bigger than the timer of the sensor
             # The sensor will read out the sensor_data, then will increase the timer_sensor with the frequency of the sensor
-            if timer-start_timer >= timer_sensor:
-                sensor_data = sensor_control.readout()
-                timer_sensor += frequencySensor
+
+            sensor_data = sensor_control.readout(timer-start_timer)
+            #timer_sensor += frequencySensor
 
             # When the amount of time that has passed is bigger than the timer of the arduino
             # The arduino will read out the arduino_data, then will increase the timer_arduino with the frequency of the arduino  

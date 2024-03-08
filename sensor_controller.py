@@ -19,11 +19,14 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Will make a Bronkhorst sensor object
 class BH_sensors:
-    def __init__(self):
+    def __init__(self, frequency):
 
         self.liquiflow = None
         self.diffp = None
         self.coriflow = None
+        self.last_data = None
+        self.timer = 0
+        self.frequency = frequency
 
     def initialize(self):
         """
@@ -43,7 +46,7 @@ class BH_sensors:
         self.coriflow = Sensor("coriflow", "/dev/ttyUSB2", 5)         # Coriolis flow Sensor location and node
 
 
-    def readout(self):
+    def readout(self, run_time):
         """ 
         readout will read out the values of the sensors and stores it into a tuple that will be used in run_write
 
@@ -54,9 +57,13 @@ class BH_sensors:
         MF_CORI : Massflow of the coriflow
         RHO_CORI: Density of the coriflow
         """
-        MF_LF                       = self.liquiflow.readSingle(205)
-        P_DP                        = self.diffp.readSingle(205)
-        [T_CORI, MF_CORI, RHO_CORI] = self.coriflow.readMultiple([142, 205, 270])
+        if run_time >= self.timer:
+            MF_LF                       = self.liquiflow.readSingle(205)
+            P_DP                        = self.diffp.readSingle(205)
+            [T_CORI, MF_CORI, RHO_CORI] = self.coriflow.readMultiple([142, 205, 270])
 
-        return (MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
+            self.last_data = (MF_LF, T_CORI, MF_CORI, RHO_CORI, P_DP)
+            self.timer += self.frequency
+
+            return self.last_data
         
