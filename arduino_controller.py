@@ -47,7 +47,7 @@ class Arduino_setup:
         Ard_T3 : The temperature measured by the arduino on location 3
         """
         if self.enable:
-            if run_time >= self.frequency:
+            if run_time >= self.timer:
                 [Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3] = self.arduino.getData()
                 self.last_data = (Ard_P1, Ard_P2, Ard_P3, Ard_T1, Ard_T2, Ard_T3)
                 
