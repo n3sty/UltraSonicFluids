@@ -71,9 +71,9 @@ import numpy as np
 
 class SyringePump:
     def __init__(self):
-        self.syringe = None
-        self.enable = None
+        #self.syringe = None
         self.syringe = pump_syringe_serial.PumpSyringe("/dev/ttyUSB0", 9600, x = 0, mode = 0, verbose=False)
+        self.enable = None
 
     def initialize(self, flow_rate):
         """
