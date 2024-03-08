@@ -33,7 +33,7 @@ def main():
 
     enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
     enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
-    enable_arduino    =  True                                                          # When True it enables the arduino and will print and store the data besides the sensor data
+    enable_arduino    =  False                                                          # When True it enables the arduino and will print and store the data besides the sensor data
 
     # Printing the predefined enabled variables
     print(f'use_syringe = {enable_syringe}')
