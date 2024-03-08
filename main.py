@@ -29,7 +29,7 @@ def main():
     path                       = "/home/flow-setup/Desktop/UltraSonicFluids/Data"      # Output location on the raspberry Pi
     syringe_starting_flow_rate = 100                                                   # The flowrate at which the syringe starts flowing [ul/min]
     syringe_change_flow_rate   = 50                                                    # The increase in flowrate, after a certain time (syringe_change_timer) it will increase the flowrate [ul/min]
-    syringe_change_timer       = 10                                                    # The time 
+    syringe_change_timer       = 1                                                   # The time 
 
     enable_syringe    =  True                                                          # When True it enables the syringe in its defined initial conditions
     enable_animation  =  False                                                         # When True it enables the animation prosses. It will not run outside of the Pi
@@ -114,7 +114,7 @@ def main():
     # Using the initial syringe_change_timer and syringe_starting_flow_rate to get the initial value of the
     # timer_syringe and S_FLOW (syringe flowrate) that can be iterated on
     #timer_syringe    = syringe_change_timer
-    S_FLOW           = syringe_starting_flow_rate
+    #S_FLOW           = syringe_starting_flow_rate
 
     # When enable_arduino is True the dataframe needs to include the data of the arduino
     if enable_arduino:
@@ -180,10 +180,9 @@ def main():
 
             if timer - start_timer >= timer_write:
                 if enable_arduino == True:
-                    data = list((timer - start_timer,) + (S_FLOW,) + sensor_control.last_data + arduino_control.last_data)
+                    data = list((timer - start_timer,) + (syringe.S_flow,) + sensor_control.last_data + arduino_control.last_data)
                 else:
-                    data = list((timer - start_timer,) + (S_FLOW,) + sensor_control.last_data)
-
+                    data = list((timer - start_timer,) + (syringe.S_flow,) + sensor_control.last_data)
 
                 iteration         += 1
                 timer_write       += frequencyWrite
